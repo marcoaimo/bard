@@ -94,7 +94,7 @@ function mkRenderList(){
   $('#mkNew').hidden=MK.tab!=='mine';
   const ul=$('#mkList'),list=mkListItems();
   if(!list.length){
-    ul.innerHTML='<li class="mk-empty">'+({fav:'Tocca il cuore su una beffa per tenerla qui, pronta per la prossima sessione.',mine:'Qui trovi le beffe che scrivi tu e quelle che hai modificato. Per modificarne una, tocca la matita sulla beffa in alto.',hist:'Le beffe che generi compaiono qui.'}[MK.tab])+'</li>';
+    ul.innerHTML='<li class="mk-empty">'+({fav:'Tocca il cuore su una beffa per tenerla qui, pronta per la prossima sessione.',mine:'Qui trovi le beffe che scrivi tu e quelle che hai modificato. Per modificarne una, tocca la matita sulla beffa in alto.',hist:'Le beffe che generi compaiono qui. Toccane una per riportarla in alto.'}[MK.tab])+'</li>';
     return;
   }
   const mineRecs=MK.tab==='mine'?liveBeffe():null;
@@ -104,8 +104,21 @@ function mkRenderList(){
     const btns=r?'<button class="mini ghost" data-edit="'+k+'" aria-label="Modifica">'+MK_ICON.edit+'</button>'
       :'<button class="mini ghost" data-say="'+k+'" aria-label="Leggi ad alta voce">'+MK_ICON.say+'</button><button class="mini ghost" data-copy="'+k+'" aria-label="Copia">'+MK_ICON.copy+'</button>'
        +'<button class="mini ghost" data-fav="'+k+'" aria-label="'+(MK.fav.includes(t)?'Togli dai preferiti':'Aggiungi ai preferiti')+'" aria-pressed="'+MK.fav.includes(t)+'">'+MK_ICON.heart+'</button>';
-    return '<li'+(r&&r.hidden?' class="mk-hidden"':'')+'><p>'+esc(t)+(note?'<small>'+esc(note)+'</small>':'')+'</p><span class="pair">'+btns+'</span></li>';
+    const pick=r&&r.hidden?'Modifica la beffa nascosta':'Mostra in alto';
+    return '<li'+(r&&r.hidden?' class="mk-hidden"':'')+'><button class="mk-pick" data-show="'+k+'" aria-label="'+pick+': '+esc(t)+'"><p>'+esc(t)+(note?'<small>'+esc(note)+'</small>':'')+'</p></button><span class="pair">'+btns+'</span></li>';
   }).join('');
+}
+/* Riporta nel riquadro principale una beffa scelta da un elenco */
+function mkRecall(k){
+  let j;
+  if(MK.tab==='mine'){const r=liveBeffe()[k];if(!r)return;if(r.hidden){mkEditOpen(mkJoke(r));return;}j=mkFind(r.text)||mkJoke(r);}
+  else{const t=mkListItems()[k];if(!t)return;j=mkFind(t)||{text:t,cat:'any',moment:'any'};}
+  mkCurJ=j;
+  if(MK.tab==='hist'){MK.hist=[j.text,...MK.hist.filter(x=>x!==j.text)].slice(0,30);save();}
+  mkShow(j);mkRenderList();
+  const card=document.querySelector('.mk-card');
+  mockEl.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  card.classList.remove('flash');void card.offsetWidth;card.classList.add('flash');
 }
 /* Dopo una sincronizzazione o un salvataggio: ricalcola l’elenco e aggiorna quello che si vede */
 function mkRefresh(){
@@ -272,6 +285,7 @@ $('#mkList').addEventListener('click',ev=>{
   else if(b.dataset.say!=null)mkSay(list[+b.dataset.say]);
   else if(b.dataset.fav!=null)mkToggleFav(list[+b.dataset.fav]);
   else if(b.dataset.edit!=null){const r=liveBeffe()[+b.dataset.edit];if(r)mkEditOpen(mkJoke(r));}
+  else if(b.dataset.show!=null)mkRecall(+b.dataset.show);
 });
 document.addEventListener('keydown',ev=>{
   if(mockEl.hidden)return;

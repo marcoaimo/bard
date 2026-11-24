@@ -330,3 +330,9 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .mk-edit .note:empty{display:none}
 .mk-field textarea,.mk-field input{font-family:inherit;color:var(--ink);outline:none}
 .mk-field textarea:focus-visible,.mk-field input:focus-visible{box-shadow:0 0 0 2px var(--accent)}
+.mk-pick{flex:1;min-width:0;border:0;background:transparent;text-align:left;padding:4px 6px;margin:-4px -6px;border-radius:10px;color:inherit;cursor:pointer}
+.mk-pick:active{background:var(--btn)}
+@media (hover:hover){.mk-pick:hover{background:var(--btn)}}
+.mk-card.flash{animation:mkflash .7s ease-out}
+@keyframes mkflash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.mk-card.flash{animation:none}}
