@@ -490,7 +490,7 @@ function onMotion(e){
   if(mag==null)return;TB.got=true;
   if(S.inst!=='tamb'||document.hidden||!ready('tamb'))return;
   const now=performance.now();
-  if(mag>12&&now-TB.lastShake>90){TB.lastShake=now;tambHit(Math.min(1.1,.4+(mag-12)/25),mag>28?'hit':'fast');}
+  if(mag>5&&now-TB.lastShake>70){TB.lastShake=now;tambHit(Math.min(1.1,.35+(mag-5)/22),mag>18?'hit':'fast');}
 }
 function motionOff(){TB.motion=false;window.removeEventListener('devicemotion',onMotion);shakeBtn.setAttribute('aria-pressed','false');}
 shakeBtn.addEventListener('click',async()=>{
