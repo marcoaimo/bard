@@ -63,7 +63,7 @@ function edOpen(src){
   else if(!src&&S.inst==='tamb')hintFlash('Scrivi qui la traccia del tamburello. Per la melodia passa a un fiato dal menu in alto.');
   else if(!src)hintFlash('Scegli la durata qui sopra, poi tocca i fori per scrivere le note. Più fori insieme fanno un accordo.');
 }
-function edEnd(){edStop();ED.on=false;editorEl.hidden=true;root.classList.remove('editing');requestAnimationFrame(layout);}
+function edEnd(){edStop();ED.on=false;editorEl.hidden=true;root.classList.remove('editing');applyCfg(S.inst);render();requestAnimationFrame(layout);}
 async function edClose(){
   if(ED.changed&&!(await askConfirm('Uscire senza salvare le modifiche a questo spartito?','Esci senza salvare')))return;
   edEnd();

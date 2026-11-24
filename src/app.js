@@ -1,7 +1,7 @@
 (function(){
 const $=s=>document.querySelector(s);
 const root=document.documentElement;
-const DEF={inst:'flute',vol:.8,rev:.35,key:60,scale:'maj',vib:.5,breath:.5,vibOn:true,cont:true,grace:true,drones:true,pnotes:'dia',ptune:'nat',autoDef:true,hinted:false};
+const DEF={inst:'flute',vol:.8,rev:.35,key:60,scale:'maj',oct:1,vib:.5,breath:.5,vibOn:true,motionVib:false,cont:true,grace:true,drones:true,pnotes:'dia',ptune:'nat',autoDef:true,hinted:false};
 let S=Object.assign({},DEF);
 try{const s=JSON.parse(localStorage.getItem('fiati-v1')||'null');if(s)Object.assign(S,s);}catch(e){}
 if(!['flute','rec','pipes','tamb'].includes(S.inst))S.inst='flute';
@@ -19,7 +19,14 @@ function notes(){
   if(S.inst==='tamb')return [];
   if(S.inst==='pipes')return (S.pnotes==='all'?PIPE_ALL:PIPE_DIA).map(m=>({midi:m,label:NOTE_IT[pc(m)],sub:EN[pc(m)]+oct(m),acc:PIPE_ACC.includes(m)}));
   const base=+S.key+(S.inst==='rec'?12:0);
-  return SCALES[S.scale].map(st=>({midi:base+st,label:NOTE_IT[pc(base+st)],sub:S.inst==='flute'?(st===12?'Ṡa':SARGAM[st]):EN[pc(base+st)],acc:!DIATONIC.includes(st)}));
+  return windSteps(S.scale,S.oct).map(st=>({midi:base+st,label:NOTE_IT[pc(base+st)],
+    sub:S.inst==='flute'?(st<12?SARGAM[st]:st%12===0?(st===12?'Ṡa':'Ṡa′'):SARGAM[st%12]+'′'):EN[pc(base+st)]+oct(base+st),acc:!DIATONIC.includes(st%12)}));
+}
+/* Gradi della scala su una, una e mezza o due ottave: più fori, strumento più lungo */
+function windSteps(sc,octs){
+  const lim=Math.round(12*(+octs||1)),one=SCALES[sc].filter(x=>x<12),out=[];
+  for(let o=0;o*12<=lim;o++)for(const st of one){const v=st+12*o;if(v<=lim)out.push(v);}
+  return out;
 }
 const mtof=m=>440*Math.pow(2,(m-69)/12);
 let overblow=false,curIdx=0;
@@ -107,6 +114,8 @@ function windVoice(bank,m,old){
   const t=ctx.currentTime,it=pick(BANK[bank].list,m),r=rateOf(it,m,-it.cents);let v;
   if(old){v=startVoice(it,r,{at:t,offset:it.ls,fade:.018,peak:1,dest:W.out});stopVoice(old,t,.025);}
   else v=startVoice(it,r,{at:t,offset:0,fade:0,peak:1,dest:W.out});
+  v.r=r;
+  if(S.motionVib){const vg=ctx.createGain();vg.gain.value=r*.012*MV.level;W.lfo.connect(vg);vg.connect(v.src.playbackRate);v.vg=vg;return v;}
   const vv=S.vibOn?S.vib:0;
   if(vv>0){const vg=ctx.createGain();vg.gain.value=0;vg.gain.setValueAtTime(0,t);vg.gain.linearRampToValueAtTime(0,t+.3);vg.gain.linearRampToValueAtTime(r*.009*vv,t+.9);
     W.lfo.connect(vg);vg.connect(v.src.playbackRate);v.vg=vg;}
@@ -310,7 +319,7 @@ function setOverblow(v){
 ob.addEventListener('pointerdown',ev=>{ev.preventDefault();initAudio();ensureBank(S.inst);try{ob.setPointerCapture(ev.pointerId);}catch(_){}setOverblow(true);});
 ['pointerup','pointercancel'].forEach(n=>ob.addEventListener(n,()=>setOverblow(false)));
 ob.addEventListener('contextmenu',ev=>ev.preventDefault());
-$('#vibBtn').addEventListener('click',()=>{S.vibOn=!S.vibOn;save();uiToggles();});
+$('#vibBtn').addEventListener('click',()=>{S.vibOn=!S.vibOn;storeCfg();uiToggles();});
 
 /* Sacca, bordoni, abbellimenti */
 const bagBtn=$('#bagBtn');
@@ -327,9 +336,9 @@ function bagToggle(){
   refresh();
 }
 bagBtn.addEventListener('click',bagToggle);
-$('#drBtn').addEventListener('click',()=>{S.drones=!S.drones;save();uiToggles();uiBag();
+$('#drBtn').addEventListener('click',()=>{S.drones=!S.drones;storeCfg();uiToggles();uiBag();
   if(P.drG){const t=ctx.currentTime;hold(P.drG.gain,t);P.drG.gain.setTargetAtTime(S.drones?1:0,t,.12);}});
-$('#grBtn').addEventListener('click',()=>{S.grace=!S.grace;save();uiToggles();});
+$('#grBtn').addEventListener('click',()=>{S.grace=!S.grace;storeCfg();uiToggles();});
 function uiToggles(){
   $('#vibBtn').setAttribute('aria-pressed',S.vibOn);
   $('#drBtn').setAttribute('aria-pressed',S.drones);
@@ -350,32 +359,84 @@ function silence(quick){
 }
 $('#instSel').addEventListener('change',ev=>{
   const inst=ev.target.value;if(S.inst===inst)return;
-  silence(true);S.inst=inst;curIdx=inst==='pipes'?1:0;save();render();
+  silence(true);S.inst=inst;applyCfg(inst);curIdx=inst==='pipes'?1:0;save();render();mvSync();
   if(SM.raw){refitSong(true);SM.pos=0;SM.done=false;SM.beat=Math.max(0,SM.ev[0].t-.5);updateSongUI();}
   else if(inst==='tamb')hintFlash('Tocca il centro per un colpo basso e il bordo per i sonagli. Trascina il dito per scuoterlo, tieni premuto Rullo per un tremolo.');
   initAudio();ensureBank(inst);
 });
+
+/* Impostazioni di ogni strumento: tonalità, scala, ottave, vibrato, opzioni della cornamusa */
+const CFG_KEYS={flute:['key','scale','oct','vib','vibOn','motionVib'],rec:['key','scale','oct','vib','vibOn','motionVib'],pipes:['pnotes','ptune','autoDef','drones','grace'],tamb:[]};
+if(!S.cfg){S.cfg={};for(const i of ['flute','rec','pipes'])S.cfg[i]=Object.fromEntries(CFG_KEYS[i].map(k=>[k,S[k]]));}
+function storeCfg(){S.cfg[S.inst]=Object.fromEntries(CFG_KEYS[S.inst].map(k=>[k,S[k]]));save();}
+function applyCfg(inst){
+  const c=S.cfg[inst]||{};CFG_KEYS[inst].forEach(k=>{S[k]=c[k]!==undefined?c[k]:DEF[k];});
+  ctl.key.value=S.key;ctl.scale.value=S.scale;ctl.oct.value=S.oct;ctl.vib.value=S.vib;ctl.motionVib.checked=!!S.motionVib;
+  ctl.pnotes.value=S.pnotes;ctl.ptune.value=S.ptune;$('#autoDef').checked=S.autoDef;
+  uiToggles();
+}
+
+/* Vibrato con il movimento: scuotendo il telefono la nota tenuta vibra di più */
+const MV={on:false,level:0,got:false,raf:0};
+async function motionPermission(){
+  if(typeof DeviceMotionEvent==='undefined')return false;
+  // Solo un "no" esplicito blocca: alcuni Chrome rispondono "prompt", e lì basta vedere se arrivano i dati
+  try{if(typeof DeviceMotionEvent.requestPermission==='function')return (await DeviceMotionEvent.requestPermission())!=='denied';}catch(_){return false;}
+  return true;
+}
+function mvMotion(e){
+  let mag=null;const a=e.acceleration;
+  if(a&&a.x!=null)mag=Math.hypot(a.x,a.y||0,a.z||0);
+  else{const g=e.accelerationIncludingGravity;if(g&&g.x!=null)mag=Math.abs(Math.hypot(g.x,g.y||0,g.z||0)-9.81);}
+  if(mag==null)return;MV.got=true;
+  MV.level=Math.max(MV.level,Math.min(1.6,Math.max(0,mag-.8)/7));
+}
+function mvTick(){
+  if(!MV.on)return;
+  MV.level*=.94;if(MV.level<.01)MV.level=0;
+  if(ctx&&W.lfo){
+    const t=ctx.currentTime;W.lfo.frequency.setTargetAtTime(4.6+MV.level*1.8,t,.08);
+    const vs=[...touches.values(),...SM.auto,...ED.voices].map(e=>e.h||e).filter(v=>v&&v.vg&&v.r);
+    vs.forEach(v=>v.vg.gain.setTargetAtTime(v.r*.012*MV.level,t,.04));
+  }
+  MV.raf=requestAnimationFrame(mvTick);
+}
+function mvSync(){
+  const want=!!S.motionVib&&(S.inst==='flute'||S.inst==='rec');
+  if(want&&!MV.on){MV.on=true;window.addEventListener('devicemotion',mvMotion);MV.raf=requestAnimationFrame(mvTick);}
+  else if(!want&&MV.on){MV.on=false;window.removeEventListener('devicemotion',mvMotion);cancelAnimationFrame(MV.raf);MV.level=0;if(ctx&&W.lfo)W.lfo.frequency.setTargetAtTime(5,ctx.currentTime,.1);}
+}
+/* Su iPhone il permesso ai sensori va chiesto con un tocco: lo chiedo al primo tocco dopo l'apertura */
+if(S.motionVib&&typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function')
+  document.addEventListener('pointerdown',()=>{motionPermission();},{once:true});
 
 /* Impostazioni */
 const sheet=$('#sheet'),scrim=$('#scrim');
 function openSheet(){sheet.hidden=false;scrim.hidden=false;$('#done').focus();}
 function closeSheet(){sheet.hidden=true;scrim.hidden=true;$('#gear').focus();}
 $('#gear').addEventListener('click',openSheet);$('#done').addEventListener('click',closeSheet);scrim.addEventListener('click',()=>{if(!sheet.hidden)closeSheet();else if(!$('#edMore').hidden)closeEdMore();else closeSongs();});
-const ctl={vol:$('#vol'),rev:$('#rev'),key:$('#key'),scale:$('#scale'),vib:$('#vib'),pnotes:$('#pnotes'),ptune:$('#ptune')};
-ctl.vol.value=S.vol;ctl.rev.value=S.rev;ctl.key.value=S.key;ctl.scale.value=S.scale;ctl.vib.value=S.vib;
+const ctl={vol:$('#vol'),rev:$('#rev'),key:$('#key'),scale:$('#scale'),vib:$('#vib'),pnotes:$('#pnotes'),ptune:$('#ptune'),oct:$('#oct'),motionVib:$('#motionVib')};
+ctl.vol.value=S.vol;ctl.rev.value=S.rev;ctl.key.value=S.key;ctl.scale.value=S.scale;ctl.vib.value=S.vib;ctl.oct.value=S.oct;ctl.motionVib.checked=!!S.motionVib;
 ctl.pnotes.value=S.pnotes;ctl.ptune.value=S.ptune;$('#autoDef').checked=S.autoDef;
-$('#autoDef').addEventListener('change',ev=>{S.autoDef=ev.target.checked;save();refresh();});
+$('#autoDef').addEventListener('change',ev=>{S.autoDef=ev.target.checked;storeCfg();refresh();});
 ctl.vol.addEventListener('input',()=>{S.vol=+ctl.vol.value;setVol();save();});
 ctl.rev.addEventListener('input',()=>{S.rev=+ctl.rev.value;setRev();save();});
-ctl.vib.addEventListener('input',()=>{S.vib=+ctl.vib.value;save();});
-ctl.key.addEventListener('change',()=>{S.key=+ctl.key.value;silence(true);save();render();});
-ctl.scale.addEventListener('change',()=>{S.scale=ctl.scale.value;silence(true);curIdx=0;save();render();});
-ctl.pnotes.addEventListener('change',()=>{S.pnotes=ctl.pnotes.value;silence(true);curIdx=1;save();render();});
-ctl.ptune.addEventListener('change',()=>{S.ptune=ctl.ptune.value;save();retune();});
+ctl.vib.addEventListener('input',()=>{S.vib=+ctl.vib.value;storeCfg();});
+ctl.key.addEventListener('change',()=>{S.key=+ctl.key.value;silence(true);storeCfg();render();});
+ctl.scale.addEventListener('change',()=>{S.scale=ctl.scale.value;silence(true);curIdx=0;storeCfg();render();});
+ctl.oct.addEventListener('change',()=>{S.oct=+ctl.oct.value;silence(true);curIdx=0;storeCfg();render();if(SM.raw){mapSong();markTargets();}});
+ctl.motionVib.addEventListener('change',async()=>{
+  if(ctl.motionVib.checked&&!(await motionPermission())){ctl.motionVib.checked=false;hintFlash('Senza il permesso ai sensori di movimento non posso sentire quando muovi il telefono.');return;}
+  S.motionVib=ctl.motionVib.checked;storeCfg();mvSync();
+  if(S.motionVib){MV.got=false;hintFlash('Tieni una nota e scuoti il telefono: più lo muovi, più la nota vibra.');
+    setTimeout(()=>{if(S.motionVib&&MV.on&&!MV.got){S.motionVib=false;ctl.motionVib.checked=false;storeCfg();mvSync();hintFlash('Questo dispositivo non segnala i movimenti: il vibrato torna normale.');}},2500);}
+});
+ctl.pnotes.addEventListener('change',()=>{S.pnotes=ctl.pnotes.value;silence(true);curIdx=1;storeCfg();render();});
+ctl.ptune.addEventListener('change',()=>{S.ptune=ctl.ptune.value;storeCfg();retune();});
 document.addEventListener('keydown',ev=>{if(ev.key!=='Escape')return;if(!$('#ask').hidden)$('#askNo').click();else if(!sheet.hidden)closeSheet();else if(!$('#edMore').hidden)closeEdMore();else if(!songsSheet.hidden)closeSongs();});
 
 /* Tastiera fisica: 1-9, 0, Q, W, E dal basso (anche insieme); Maiusc = ottava sopra; Spazio = sacca */
-const KEYS='1234567890qwe';
+const KEYS='1234567890qwertyuiopasdfghjk';
 document.addEventListener('keydown',ev=>{
   if(!sheet.hidden||!songsSheet.hidden||!$('#edMore').hidden||!$('#ask').hidden||!$('#mock').hidden||ev.repeat||ev.metaKey||ev.ctrlKey||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName))return;
   const k=ev.key.toLowerCase(),i=KEYS.indexOf(k);
@@ -505,9 +566,7 @@ shakeBtn.addEventListener('click',async()=>{
   if(TB.motion){motionOff();return;}
   initAudio();ensureBank('tamb');
   if(typeof DeviceMotionEvent==='undefined'){hintFlash('Questo dispositivo non segnala i movimenti.');return;}
-  try{if(typeof DeviceMotionEvent.requestPermission==='function'&&await DeviceMotionEvent.requestPermission()!=='granted'){
-    hintFlash('Senza il permesso ai sensori di movimento non posso sentire quando scuoti il telefono.');return;}}
-  catch(_){hintFlash('Il browser non ha dato l’accesso ai sensori di movimento.');return;}
+  if(!(await motionPermission())){hintFlash('Senza il permesso ai sensori di movimento non posso sentire quando scuoti il telefono.');return;}
   TB.motion=true;TB.got=false;window.addEventListener('devicemotion',onMotion);shakeBtn.setAttribute('aria-pressed','true');
   hintFlash('Scuoti il telefono come un tamburello.');
   setTimeout(()=>{if(TB.motion&&!TB.got){motionOff();hintFlash('Questa pagina non riceve i dati di movimento del dispositivo. Usa il dito o il Rullo.');}},2000);
@@ -533,7 +592,7 @@ function fitSong(raw){
     }else{
       const base=S.inst==='rec'?12:0;
       for(const key of [60,62,64,65,67,69])for(const sc of Object.keys(SCALES)){
-        const L=SCALES[sc].map(x=>x+key+base);let out=0,ob=0;
+        const L=windSteps(sc,S.oct).map(x=>x+key+base);let out=0,ob=0;
         for(const m of T){if(L.includes(m))continue;if(L.includes(m-12)){ob++;continue;}out++;}
         take({sh,key,scale:sc,out,ob,cost:out*1000+(ob?100+ob:0)+(sc==='chr'?50:0)+shc-(key===+S.key&&sc===S.scale?.5:0)});
       }
@@ -585,7 +644,9 @@ function loadSong(raw){
   updateSongUI();if(!SM.raf)SM.raf=requestAnimationFrame(tick);
 }
 function closeSong(){
+  const had=!!SM.raw;
   stopListen();SM.raw=null;SM.ev=[];songbar.hidden=true;
+  if(had){applyCfg(S.inst);render();} // il brano aveva adattato tonalità e scala: tornano le tue
   if(SM.raf)cancelAnimationFrame(SM.raf);SM.raf=0;markTargets();refresh();
 }
 function songOnRender(){if(SM.raw)mapSong();markTargets();}
@@ -962,7 +1023,7 @@ $('#fileIn').addEventListener('change',async ev=>{
 /*__MOCK__*/
 $('#backupIn').addEventListener('change',ev=>{const f=ev.target.files[0];ev.target.value='';if(f)importBackup(f);});
 $('#sbEdit').addEventListener('click',()=>{if(SM.raw)edOpen(SM.raw);});
-uiToggles();curIdx=S.inst==='pipes'?1:0;render();
+applyCfg(S.inst);curIdx=S.inst==='pipes'?1:0;render();mvSync();
 Cloud.start();
 if(window.FIATI_STANDALONE&&'serviceWorker' in navigator&&location.protocol!=='file:')
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
