@@ -5,6 +5,6 @@
    La chiave pubblica è fatta per stare nel browser: i dati sono protetti dalle
    regole di accesso create da supabase/schema.sql. */
 window.FIATI_CLOUD = {
-  url: '',
-  key: ''
+  url: 'https://rokbvinegfsrsmehnhen.supabase.co',
+  key: 'sb_publishable_m8mfBQfRSr6suVsFGAMNkQ_kvb1_VWP'
 };
