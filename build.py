@@ -14,12 +14,39 @@ SRC, DOCS = os.path.join(ROOT, 'src'), os.path.join(ROOT, 'docs')
 rd = lambda p: open(os.path.join(SRC, p), encoding='utf-8').read()
 rdd = lambda p: open(os.path.join(DOCS, p), encoding='utf-8').read()
 
+def beffe_json():
+    """Legge src/beffe.txt (facile da modificare a mano) e lo converte nei dati dell'app."""
+    ST = {'S': 'standup', 'R': 'roast', 'A': 'assurdo', 'C': 'crowd', 'D': 'autore'}
+    TP = {'a': 'aspetto', 'p': 'puzza', 'i': 'incompetenza', 's': 'stupidita', 'e': 'ego', 'f': 'famiglia',
+          'm': 'morte', 'd': 'meta', 'x': 'fortuna', 't': 'atteggiamento', 'z': 'fiabe', 'g': 'any'}
+    out, seen, cat, mom = [], set(), 'any', 'any'
+    for n, line in enumerate(rd('beffe.txt').splitlines(), 1):
+        if not line.strip() or line.startswith('#'):
+            continue
+        if line.startswith('@'):
+            cat, mom = line[1:].split()
+            continue
+        code, text = line[:3], line[4:]
+        assert code[0] in ST and code[1] in '012' and code[2] in TP, f'beffe.txt riga {n}: codice non valido'
+        src = None
+        if ' ~ ' in text:
+            text, src = text.split(' ~ ', 1)
+        assert text not in seen, f'beffe.txt riga {n}: beffa duplicata'
+        seen.add(text)
+        j = {'cat': cat, 'moment': mom, 'style': ST[code[0]], 'heat': int(code[1]), 'topic': TP[code[2]], 'text': text}
+        if src:
+            j['src'] = src
+        out.append(j)
+    return out
+
 css, body, js = rd('app.css'), rd('body.html'), rd('app.js')
 js = (js.replace('/*__STORE__*/', rd('store.js'))
         .replace('/*__CLOUD__*/', rd('cloud.js'))
         .replace('/*__EDITOR__*/', rd('editor.js'))
-        .replace('__SONGS__', json.dumps(json.loads(rd('songs.json')), ensure_ascii=False, separators=(',', ':'))))
-assert '/*__' not in js and '__SONGS__' not in js
+        .replace('/*__MOCK__*/', rd('beffe.js'))
+        .replace('__SONGS__', json.dumps(json.loads(rd('songs.json')), ensure_ascii=False, separators=(',', ':')))
+        .replace('__BEFFE__', json.dumps(beffe_json(), ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')))
+assert '/*__' not in js and '__SONGS__' not in js and '__BEFFE__' not in js
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'

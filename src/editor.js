@@ -283,7 +283,7 @@ $('#edMeter').addEventListener('change',ev=>{edSnap();ED.meter=ev.target.value.s
 
 /* Scorciatoie da tastiera nell’editor */
 document.addEventListener('keydown',ev=>{
-  if(!ED.on||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName)||!sheet.hidden||!edMore.hidden)return;
+  if(!ED.on||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName)||!sheet.hidden||!edMore.hidden||!$('#mock').hidden)return;
   const k=ev.key;
   if(k==='ArrowLeft'){edMove(-1);ev.preventDefault();}
   else if(k==='ArrowRight'){edMove(1);ev.preventDefault();}

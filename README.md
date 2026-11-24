@@ -1,6 +1,6 @@
 # Fiati tascabili
 
-Flauto di bambù, flauto dolce, cornamusa e tamburello da suonare sul telefono, con brani, editor di spartiti e sincronizzazione facoltativa.
+Flauto di bambù, flauto dolce, cornamusa e tamburello da suonare sul telefono, con brani, editor di spartiti, sincronizzazione facoltativa e un generatore di beffe crudeli per il bardo.
 
 È un sito statico: niente build sul server, niente dipendenze da installare. Funziona offline dopo la prima apertura e si può aggiungere alla schermata Home.
 
@@ -31,7 +31,8 @@ Il piano gratuito di Supabase mette in pausa i progetti con poca attività per u
 
 ## Struttura
 
-- `src/`: sorgenti dell’app (stile, markup, codice, archivio, editor, sincronizzazione, brani d’esempio)
+- `src/`: sorgenti dell’app (stile, markup, codice, archivio, editor, sincronizzazione, brani d’esempio, beffe)
+  - `src/beffe.txt`: le beffe crudeli, una per riga, con bersaglio, momento, stile, volgarità e tema; le istruzioni sono in cima al file
 - `build.py`: rigenera `docs/index.html`, `app.css`, `app.js`, `sw.js` e il manifest dai sorgenti; crea anche `artifact.html`, la versione a file unico
 - `docs/`: il sito pubblicato
   - `config.js`: configurazione della sincronizzazione

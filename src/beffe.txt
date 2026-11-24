@@ -1,0 +1,642 @@
+# Formato: "@bersaglio momento" apre un blocco.
+# Ogni riga: stile (S stand-up, R roast, A assurdo, C al pubblico, D d'autore) + volgarità (0-2) + tema + testo [~ fonte]
+# Temi: a aspetto, p puzza, i incompetenza, s stupidità, e ego, f famiglia, m morte, d meta/D&D, x sfortuna, t atteggiamento, z fiabe, g generica
+
+@any any
+S0a Hai una faccia da quadro. Di quelli che nei castelli girano verso il muro.
+R1a Ti hanno disegnato su una mappa: è il punto dove c'è scritto «qui ci sono i mostri».
+A0a Lo specchio magico ti ha visto e ha chiesto di essere declassato a finestra.
+S0a Non sei brutto. Sei solo il motivo per cui i paladini portano l'elmo chiuso.
+R1a Con quella faccia potresti fare il guardiano di un dungeon. Anche senza trappole.
+C0a Guardatelo bene, gente: ecco cosa succede quando un mimic prova a imitare una persona.
+A0a Una medusa ti ha guardato negli occhi e si è pietrificata lei. Pur di non rivederti.
+R2a Hai la faccia come il culo. Ma il culo almeno lo tieni coperto.
+S0a I bardi cantano di te. Soprattutto per far piangere i bambini cattivi.
+R1a Hai un viso che non si dimentica. Purtroppo.
+A0a Se la bellezza fosse un incantesimo, tu saresti un trucchetto lanciato male.
+R1a Bel mantello. L'hai preso a un cadavere o te l'ha regalato lui per non vederti più?
+R0a Il tuo ritrattista ha chiesto un supplemento per danni morali.
+C1a Qualcuno ha una pozione di cura? No, non per lui: per chi lo deve guardare.
+A0a Hai l'eleganza di un orsogufo sui pattini.
+R1a Sei così brutto che gli specchi, per gentilezza, mostrano qualcun altro.
+S0a Hai il fisico di uno che ha messo tutto in Saggezza. E ha perso anche quella.
+A1a Il tuo barbiere usa un'ascia bipenne. E si vede.
+R2a Con quella faccia da stronzo non ti serve nemmeno un incantesimo di paura.
+C0a Fate largo, fate largo: passa il manuale illustrato delle cose da non diventare.
+S0p Puzzi come un troll che si è rigenerato dentro una fogna.
+R1p Persino le mosche ti girano attorno a distanza di sicurezza.
+A0p Il tuo odore ha l'iniziativa più alta del tavolo: arriva sempre prima di te.
+R1p L'ultima volta che ti sei lavato, l'oceano era ancora nuovo.
+C1p Qualcuno apra una finestra. O un portale. Qualsiasi cosa che porti lontano da qui.
+S0p Ho conosciuto zombie più profumati. E loro almeno avevano una scusa.
+A0p Un otyugh ti ha annusato e ha chiesto di cambiare discarica.
+R2p Puzzi così tanto di merda che i goblin ti chiedono la ricetta.
+S1p Il tuo alito ha il tiro salvezza su Costituzione incorporato.
+A0p Quando passi, i fiori appassiscono e i non-morti si girano: pensano che tu sia dei loro.
+R1p Per seguire le tue tracce non servono i segugi. Basta seguire i segugi che scappano.
+C0p Respirate con la bocca, ragazzi. Ah no, così si sente anche il sapore.
+S0p Ti ho sentito arrivare. Con il naso, purtroppo.
+R2p Faresti vomitare un cubo gelatinoso, e quello si mangia anche gli stivali.
+A0p Persino un drago verde, che sputa veleno, ti ha chiesto di metterti sottovento.
+S1p Le terme ti hanno dato il divieto d'ingresso a vita. Con targa commemorativa.
+R0p Non ti lavi da un'era intera. E si vede. Anzi, si sente.
+C1p Il bardo canterebbe le tue gesta, ma ha il naso tappato. Scusate la voce nasale.
+R1p Hai un odore così forte che ha un suo turno in combattimento.
+A1p Il tuo bagno annuale è una leggenda. Come i draghi buoni e i paladini simpatici.
+R1i Il tuo maestro d'armi oggi fa il pescatore. Dice che i pesci almeno imparano.
+S0i Combatti come un contadino. Anzi no: i contadini contro le cavallette vincono.
+A0i Hai la mira di un ciclope che ha perso anche l'occhio buono.
+R1i Nei contratti di gilda c'è scritto «nessuna esperienza richiesta». Tu l'hai preso come una sfida.
+S0i Complimenti: hai trasformato ogni tuo talento in un'abilità passiva. Molto passiva.
+C0i Votiamo: chi pensa che riuscirà a colpire qualcosa entro stasera? Nessuno? Neanche lui.
+A0i Se fossi un'arma, saresti un cucchiaio di legno con la maledizione del meno uno.
+R1i Hai sbagliato mestiere. E anche quello di riserva. E quello di riserva della riserva.
+S1i Ti pagano a giornata o a fallimento? Perché nel secondo caso saresti ricchissimo.
+R0i Un pugnale +1? A te servirebbe un pugnale che chieda scusa al posto tuo.
+C1i Un applauso al nostro amico, che sta reinventando il concetto di colpo mancato.
+R2i Sei così incapace che persino i tuoi fallimenti critici fanno un lavoro di merda.
+S0i Il tuo addestramento militare è durato un pomeriggio. Pausa pranzo compresa.
+A1i La competenza in armi sulla tua scheda è un errore di stampa.
+R1i Hai più cicatrici prese scappando che combattendo.
+S0i Al villaggio eri il migliore. Poi qualcuno ha contato quanti eravate: due.
+C0i Ehi, gruppo: chi aveva scommesso che inciampava, ritiri pure la vincita.
+A0i Impugni la spada come un ombrello che ti hanno prestato.
+R2i Combatti come una merda di cavallo: fumi tanto e non fai male a nessuno.
+S0i Hai l'esperienza di un veterano. Di un veterano delle ritirate.
+S0s Hai Intelligenza 3. E il 3 te l'hanno prestato.
+R1s Pensi così piano che i tuoi pensieri arrivano già vecchi.
+A0s Se le idee fossero monete, potresti comprarti mezzo stuzzicadenti.
+S0s Ogni volta che parli, da qualche parte un mago dimentica un incantesimo.
+R1s Hai l'acume di un portone. Chiuso. Con il chiavistello.
+C0s Qualcuno gli spieghi il piano. Piano. Più piano. Ancora più piano.
+A0s Il tuo cervello è come una borsa conservante: ci metti dentro di tutto e non trovi mai niente.
+R2s Sei così scemo che ti fregherebbe anche un coboldo ubriaco.
+S1s La tua testa è perfetta per un elmo. Dentro c'è un sacco di spazio.
+A0s Un divoratore di menti ti ha assaggiato il cervello e ha chiesto il menù per bambini.
+R1s Non sei il coltello più affilato dell'armeria. Sei il manico.
+C1s Ragazzi, ha appena avuto un'idea. Fermiamoci a guardarla: non capita spesso.
+S0s Hai la saggezza di una falena davanti a una palla di fuoco.
+A0s Se pensassi ad alta voce, sentiremmo l'eco.
+R2s Sei scemo come un secchio di piscio, e il secchio almeno serve a qualcosa.
+S0s Hai provato a leggere una pergamena al contrario. Era una pergamena di Comprensione dei Linguaggi.
+R1s La tua Intelligenza e la tua Classe Armatura hanno lo stesso numero. Ed è basso anche per una Classe Armatura.
+C0s Diamogli un applauso: è arrivato fin qui senza mangiare nessun fungo strano. Forse.
+A1s Il tuo pensiero più profondo è annegato in una pozzanghera.
+R1s Hai un cervello nuovo di zecca. Mai usato.
+S0e Ti presenti con sei titoli nobiliari. Tre li hai inventati, gli altri tre te li hanno tolti.
+R1e Parli di te in terza persona perché neanche la prima vuole averti.
+A0e Il tuo ego occupa due caselle sulla griglia. Tu mezza.
+S0e Hai un'altissima opinione di te. Peccato che sia l'unica opinione che hai.
+R1e Sei convinto di essere l'eroe di questa storia. Sei il goblin che muore nella prima scena.
+C0e Alzi la mano chi ha mai sentito parlare di lui. Visto? Anch'io ho dovuto chiedere.
+R2e Ti credi il re del mondo, ma sei solo il buco del culo di una contea minore.
+S1e Ti sei scritto da solo la tua ballata. Si sente: fai rimare «io» con «io».
+R1e Il tuo stemma è uno specchio in campo d'oro. Il motto: «E basta».
+A0e Dici di valere il tuo peso in oro. Va bene, ma sulla bilancia di un coboldo.
+C1e Qualcuno lo avverta: la gente non lo fissa per ammirazione. Cerca di capire cos'è.
+S0e Ti dai un sacco di arie. Tutte viziate.
+R1e Ti piace il suono della tua voce. Sei l'unico.
+A0e Hai così tanta autostima che i tuoi specchi hanno chiesto le ferie.
+S0e Ti sei fatto da solo. E si vede: niente garanzia, niente libretto di istruzioni.
+R1e Sei la persona più importante della tua vita. Purtroppo anche l'unica.
+S0f Tuo padre ti ha insegnato a combattere. Poi si è fatto sostituire dal cane, che spiegava meglio.
+R1f Tua madre ti ha dato il nome di una malattia. La malattia ha fatto causa.
+A0f Il tuo albero genealogico è un cespuglio. Spinoso, e senza un fiore.
+S0f I tuoi antenati ti guardano dall'aldilà. Girati dall'altra parte.
+R1f Nella tua famiglia vi chiamate per numero: con tutti quei fallimenti è più comodo.
+C0f Un applauso a sua madre, che lo aspetta ancora a casa. Chissà perché ha cambiato la serratura.
+A0f Tua nonna ha venduto l'anima a un diavolo. Il diavolo voleva restituire te come resto.
+R1f Quando sei nato, tua madre ha guardato il chierico e ha chiesto se si poteva annullare.
+S0f Sei la pecora nera della famiglia. E la tua famiglia alleva lupi mannari.
+R1f I tuoi genitori ti volevano tanto bene. Poi hai imparato a parlare.
+A0f Lo stemma di famiglia raffigura un cucchiaio. Rovesciato.
+S0f A casa tua le cene sono silenziosissime: tutti fingono di non conoscersi.
+R2f Tuo padre era un orco e tua madre un troll, e tu sei riuscito a essere peggio di tutti e due, cazzo.
+C1f Chi vuole conoscere la sua famiglia? Nessuno, giustamente. Neanche lui li vede da anni.
+A0f Il motto di famiglia è «Ci abbiamo provato». Sotto, più piccolo: «Tranne lui».
+S0f Tuo fratello è quello intelligente. E tuo fratello è un pollo.
+R1f Il tuo albero genealogico l'hanno bruciato i druidi, per salvare il bosco.
+S0m Muori pure in pace. Nessuno noterà la differenza.
+R1m Il tuo necrologio è già pronto: due righe, e una è un refuso.
+A0m La Regina Corvo ha messo la tua anima in lista d'attesa.
+S0m Tre tiri salvezza contro la morte? Fatica sprecata: la morte ha già perso interesse.
+R1m Quando morirai, il tuo fantasma infesterà solo se stesso.
+C0m Prenotiamo il becchino adesso: con lui conviene il pacchetto completo.
+A0m Il traghettatore ti chiederà due monete. Una per il viaggio, una per non doverti parlare.
+R2m Morirai da solo, puzzolente, e nessuno si ricorderà il tuo nome di merda.
+S1m Ti seppelliranno con i tuoi tesori: un sasso e un'opinione sbagliata.
+R1m La morte non ti fa paura? Tranquillo: neanche tu fai paura a lei.
+A0m Il tuo testamento si legge in un minuto. Il funerale in trenta secondi.
+C1m Raccogliamo i soldi per la sua lapide! Abbiamo due rame e la scritta: «Peccato. Ma neanche tanto».
+S0m Prima di morire la vita ti passerà davanti agli occhi. Tranquillo, sarà breve e noiosa.
+R1m Il tuo sacrificio non sarà dimenticato. Per dimenticarlo bisognerebbe prima notarlo.
+S0d Alla nascita hai tirato un 1 naturale e nessuno ti ha fatto ritirare.
+R1d Il master ti ha creato in trenta secondi. E si vede.
+A0d Sulla tua scheda hanno scritto tutto a matita: nessuno pensava che saresti durato.
+S0d Sei un incontro casuale. Di quelli che il master tira quando si annoia.
+R1d Hai la Classe Armatura di un plico di carta bagnata.
+A0d Quando tiri i dadi, i dadi si mettono d'accordo per perdere.
+S1d Vivi di tiri con svantaggio. È la tua dieta.
+R1d Sei così poco importante che il master non ti ha dato un nome. Sulla scheda c'è scritto «il tizio».
+A0d La tua miniatura è un tappo di bottiglia. E ti sta larga.
+S0d Hai i punti ferita minimi. Non per sfortuna: per realismo.
+R2d Sei il PNG più di merda che il master abbia mai improvvisato, e una volta ha inventato una capra parlante.
+C0d Si accettano scommesse: quanti round prima che il master si dimentichi di te dietro un albero?
+A1d Il tuo allineamento è caotico irritante.
+S0d Ogni tuo turno dura un'eternità. E alla fine dici «attacco».
+R1d Hai il carisma della tabella dei prezzi nel Manuale del Giocatore.
+A0d Il tuo personaggio è stato creato con il metodo «tira 3d6 e piangi».
+C0d Quanti di voi hanno già dimenticato il suo nome? Bene, siamo in tanti. Anche lui.
+S1d Il master tiene lo schermo davanti per un motivo: non doverti guardare.
+R0d Il tuo bonus di competenza è negativo. Come la tua compagnia.
+A0d Non sei un mostro. Sei il segnalino che tiene il posto al mostro vero.
+S0d Hai l'aria di una missione secondaria scritta di fretta.
+R1d Sei così noioso che il master ha fatto un tiro di Intuizione per capire se eri vivo.
+A0d Se fossi un oggetto magico, saresti la Borsa delle Cianfrusaglie. Senza il tiro di dado.
+S0x Hai più sfortuna di un gatto nero che passa sotto una scala davanti a un drago.
+R1x La dea della fortuna ti ha bloccato su tutti i piani d'esistenza.
+A0x Il tuo quadrifoglio è un trifoglio con una foglia disegnata male.
+S0x Se piovesse oro, a te arriverebbe la grandine.
+R1x La sfortuna ti segue ovunque. Secondo me è innamorata.
+C0x Qualcuno tocchi ferro. Anzi no, lo tocchi lui: la spada, magari dalla parte giusta.
+A0x Il tuo segno zodiacale è «lavori in corso».
+S1x Sei così sfortunato che ogni forziere che trovi è un mimic.
+R1x I tuoi dadi sono maledetti. Purtroppo vale anche per le tue scelte.
+A0x Hai perso a testa o croce con una moneta a due teste.
+R2x Hai una sfiga così grande che i corvi ti cagano in testa anche al chiuso.
+C1x Scommettete contro di lui, gente: è l'unico investimento sicuro del regno.
+S0x Anche il tuo quadrifoglio portafortuna ha chiesto il trasferimento.
+A1x Il tuo oroscopo di oggi dice: «Cambia avversario».
+S0t Mi piace la tua sicurezza. È commovente, come un bambino che sfida un'onda.
+R1t Hai l'atteggiamento del boss finale e il curriculum del ratto in cantina.
+A0t Ti muovi come se avessi una colonna sonora. È una marcia funebre.
+S0t Ti atteggi a minaccia. Al massimo sei l'avvertenza sul retro di una pozione.
+R1t Fai il duro, ma hai la grinta di un budino lasciato al sole.
+C0t Guardate come gonfia il petto! Qualcuno lo avvisi che non è un tacchino. O forse sì.
+A0t La tua aria minacciosa spaventa solo le galline. E solo quelle anziane.
+R2t Fai tanto il duro, ma sei solo uno stronzo con la cotta di maglia.
+S1t Hai la sicurezza di chi non ha ancora capito cosa sta per succedergli.
+A0t Hai lo sguardo del falco. Di un falco impagliato.
+R1t Ti credi un lupo solitario. Sei un cane che si è perso.
+C1t Fategli spazio: gli serve posto per l'entrata epica e per l'uscita di corsa.
+S0t Le tue minacce di morte suonano come un invito a cena di cui non mi fido.
+A1t Sei arrogante come un gatto e utile come un gatto. Ma molto meno carino.
+S0g Ti rispetterei, se non ti conoscessi.
+R1g Sei come un sassolino nello stivale: piccolo, inutile e insopportabile.
+A0g Se fossi un incantesimo, saresti Prestidigitazione: un po' di polvere e nessuno si ricorda di te.
+S1g Non ti odio. Odiarti richiederebbe uno sforzo che non meriti.
+R1g Hai il fascino di un esattore delle tasse a un funerale.
+C0g Gente, un applauso: è riuscito a deludermi senza nemmeno provarci.
+A0g Sei l'ombra di te stesso. E l'ombra ha chiesto la separazione.
+R2g Sei un pezzo di merda così perfetto che dovrebbero esporti in un museo.
+
+@goblin any
+S0g Ah, un goblin. Al villaggio devono aver finito i topi da mandare in avanscoperta.
+R1i Sei un goblin scarso anche per i goblin. E i goblin si mangiano gli stivali.
+A0a Hai un naso così lungo che entra in combattimento un turno prima di te.
+C0g Contatelo bene, gente: sono tre goblin sotto un mantello, e nessuno dei tre sa combattere.
+S0f Tua madre ti ha venduto per tre noci. Il compratore vuole ancora il resto.
+R2p Puzzi come la latrina di un goblin, e sei un goblin: sei riuscito a peggiorare la tua specie.
+A0s Coboldo, il tuo drago ti ha mandato qui perché non sopportava più le tue domande.
+S1e Ti sei proclamato re dei goblin. Re di sei goblin e una capra. La capra non ha votato.
+R1x Persino le trappole che costruisci tu preferiscono te come vittima.
+C1a Guardate quel coboldo: la cosa più minacciosa che abbia mai visto in una scatola di biscotti.
+A0i La tua trappola è così brutta che il bersaglio si è fermato a darti dei consigli.
+S0g Sei piccolo e cattivo, come un sassolino nella scarpa. Di quelli che si tolgono.
+R1t Strilli tanto, per un coboldo. Del tuo drago hai preso la voce, e nient'altro.
+A1g Sei il motivo per cui i goblin non vengono mai invitati alle feste. Dagli altri goblin.
+R2g Un goblin di merda come te dovrebbe pagare l'affitto alla fogna.
+C0d Gente, è un incontro di livello 1. E per lui è comunque troppo.
+
+@maghi any
+S0i Vent'anni in una torre a studiare, e hai imparato solo a scendere le scale. Lentamente.
+R1e Hai il cappello a punta. Il resto di te è perfettamente ottuso.
+A0s Il tuo libro degli incantesimi ha più orecchie di un coniglio e meno senso.
+S0i Saprai anche lanciare Palla di Fuoco, ma la tua conversazione resta tiepida.
+R1g La tua barba è più lunga del tuo curriculum. E puzza uguale.
+C0i Qualcuno chieda al mago che accademia ha frequentato. Così la evitiamo.
+A0g Il tuo famiglio è un gatto che ti guarda con disprezzo. Ha ragione lui.
+S1s Conosci mille lingue. Peccato che in nessuna tu abbia qualcosa da dire.
+R1i L'accademia ti ha dato il diploma solo per farti uscire dall'edificio.
+A0i Hai lanciato Invisibilità e nessuno se n'è accorto. Era così anche prima.
+S0s Componenti verbali, somatiche e materiali. Ti mancano solo quelle mentali.
+R2i Sei un mago di merda: l'unica cosa che fai sparire sono gli amici.
+C1g Un applauso al grande arcimago, signore e signori! Non si sa di cosa, ma è grande.
+A1e Il tuo bastone è più alto di te. Compensa qualcosa, ma non chiedermi cosa.
+R1a Sei pallido come una pergamena e interessante allo stesso modo.
+S0d Prepari otto incantesimi al giorno e li sbagli tutti e otto, con grande puntualità.
+
+@spettri any
+S0g Un fantasma! Che paura… di annoiarmi a morte un'altra volta.
+R1g Sei morto e sei rimasto qui. Neanche l'aldilà ti ha voluto.
+A0a Sei trasparente, eppure nessuno vuole guardarti attraverso.
+S0t Fai «buuh» da trecento anni. Mai pensato di cambiare battuta?
+R1i Secoli a infestare un castello, e non riesci ancora a spaventare il gatto.
+C0g Gente, guardiamo il lato positivo: è l'unico fantasma che fa ridere i bambini.
+A0f Trascini catene da secoli. Erano i debiti di gioco di tuo nonno, e te li sei presi tu.
+S1m Sei morto da secoli e non hai ancora superato la fase del lutto.
+R1e Sei l'eco di quello che eri. E quello che eri faceva già schifo.
+A0g Ti ho attraversato con la mano e mi è venuta la tristezza. Non il freddo: la tristezza.
+S0g I fantasmi veri hanno conti in sospeso. Tu hai solo un conto all'osteria.
+R2g Sei uno spettro del cazzo: neanche da morto riesci a fare paura.
+C1g Qualcuno chiami un chierico. Non per esorcizzarlo: per fargli un po' di compagnia, poverino.
+A1g Il tuo lamento spettrale sembra un mulo raffreddato.
+R1g Mi passi attraverso e sento un gran vuoto. Ah no, è il tuo carattere.
+S0d Hai resistenza ai danni non magici. E a ogni forma di simpatia.
+
+@nonmorti any
+S0g Se il necromante ti ha riportato in vita, vorrei parlare con il suo ufficio reclami.
+R1a Sei uno scheletro, e non hai nemmeno il buon gusto di avere delle belle ossa.
+C0s Uno zombie! Finalmente qualcuno con meno cervello del nostro guerriero.
+S0p Sei morto, va bene. Ma era proprio necessario marcire in pubblico?
+R1g Ti scricchiolano più le ossa delle scuse.
+A0i Ti è caduto un braccio. Raccoglilo: ti serve per combattere. O almeno per salutare.
+C0g Un applauso allo scheletro: ha già perso tutto e continua a provarci.
+S1s Uno zombie che cerca cervelli. Capisco: si cerca sempre quello che non si ha.
+R2p Puzzi di carne marcia e di culo, e il culo l'hai perso tre settimane fa.
+A0g Hai il sorriso di uno scheletro. Ah, già: è l'unica espressione che ti resta.
+S0m Sei già morto. Ti sto solo aiutando a ricordartelo.
+R1i Il necromante ti ha rianimato per sbaglio. Voleva il cane.
+A1a Sei così magro che il vento ti usa come flauto.
+C1m Qualcuno porti una pala: questo va rispedito a casa.
+S0g Muori di nuovo, ma stavolta con un po' di stile.
+R1g Hai il fascino di un lunedì mattina in una cripta.
+
+@draghi any
+S0e Grande drago, grande tesoro, grande ego. E un cervello piccolo, piccolissimo.
+R1g Dormi su un mucchio d'oro come un pensionato sul materasso.
+A0p Il tuo soffio? L'avevo sentito tre regni fa, molto prima che lo usassi.
+S0g Mille anni di vita e non hai ancora imparato a chiedere permesso.
+R1e Ti chiamano «il Terrore dei Cieli». L'hai scritto tu sulle nuvole?
+C0g Gente, è un drago. Lo so, sembra un geco con problemi di gestione della rabbia.
+A0f Tua madre ha covato un uovo bellissimo. Poi sei nato tu.
+S1x Tutto quell'oro e nessuno che ti voglia bene.
+R1a Le tue scaglie hanno la forfora.
+A0i Mille anni di vita e ti fai ancora fregare dagli halfling.
+S0g Se sei così potente, perché vivi in una grotta umida come un rospo?
+R2g Sei solo una lucertola del cazzo con un problema di accumulo compulsivo.
+C1p Inchinatevi davanti al grande drago! O meglio, abbassatevi: l'alito arriva ad altezza naso.
+A0g Il tuo tesoro è così grande che ti serve un ragioniere. Il ragioniere ha chiesto di cambiare caverna.
+R1d Sei un drago antico. Antico come le tue battute.
+S0t Fai la voce grossa, ma sei solo un tesoro con le ali che ha paura dei ladri.
+
+@demoni any
+S0g Vieni dagli Inferi? E perché non ci sei rimasto?
+R1g Commerci in anime da secoli, e la tua non l'ha ancora voluta nessuno.
+A0a Le tue corna non fanno paura. Sembrano un attaccapanni con ambizioni.
+S0e Ti credi il re dell'Abisso. L'Abisso ti considera un inquilino moroso.
+R1p Puzzi di zolfo e di occasioni mancate.
+C0g Signore e signori, un demone! Mostrategli l'uscita: è la stessa da cui è entrato.
+A0i All'Inferno ti hanno messo all'accoglienza perché non sapevano cos'altro farti fare.
+S1g All'Inferno fa caldo, lo so. Ma era proprio necessario portarsi dietro anche l'antipatia?
+R1e Ti fai chiamare Principe dei Demoni. Il titolo te l'ha dato tua madre.
+A0g La tua frusta di fuoco sembra una cintura in saldo.
+S0i Tentatore di anime, eh? Al massimo potresti tentare un bambino con un sasso.
+R2g Sei un diavolo di merda: anche all'Inferno ti chiamano «quello lì».
+C1g Tranquilli, ragazzi: questo demone non ruba anime. Ruba solo tempo.
+A1g Dicono che l'inferno siano gli altri. Il nostro sei tu.
+R1g Ti hanno dato le ali per farti volare lontano. Non ha funzionato.
+S0d Grado di Sfida altissimo, simpatia sottozero.
+
+@mostri any
+S0a Quanti tentacoli! E nessuno che voglia stringerti la mano.
+R1g Sei un abominio. E non nel senso artistico.
+A0g Il tuo creatore ti ha visto e ha cambiato hobby.
+S0g Metà leone e metà aquila. Peccato che le due metà non si parlino.
+R1a Hai sette occhi e nessuno sa dove guardare per trovare un po' di dignità.
+C0g Gente, un mostro! Tranquilli, ha più paura lui di noi. Anche di se stesso.
+A0s Un orsogufo: la forza di un orso e il cervello di un gufo impagliato.
+S1g Sei il risultato di un esperimento magico andato male. E ti hanno pure dato un nome.
+R1i Mostro leggendario, eh? Leggendario per quanto è facile da ammazzare.
+A0g Sei così strano che il bestiario ti ha messo in appendice.
+S0f Nei bestiari ti descrivono come temibile. Il bestiario l'ha scritto tua madre.
+R2a Sei brutto come la merda anche per essere un mostro.
+C1g Qualcuno sa cos'è? No? Neanche lui.
+A1g Sei un mimic travestito da forziere, e nessuno ha voglia di aprirti.
+R1g Ti chiamano «l'orrore della palude». La palude ha chiesto di cambiare nome.
+S0d Hai la scheda più lunga del bestiario e sei durato due round.
+
+@umanoidi any
+S0i Bella spada. Peccato che sia l'unica parte di te affilata.
+R1g Hai l'armatura completa e la personalità di un elmo vuoto.
+A0i Combatti come un contadino che ha visto una spada solo in un dipinto.
+S0g Sei la guardia più fedele del castello: nessuno ti ha mai visto vincere.
+R1t Fai il bandito duro, ma sei solo un tizio con un coltello e problemi di autostima.
+C0i Gente, un mercenario! Lo pagano a giornata. Speriamo per lui che oggi sia mezza.
+A0g Il tuo scudo ha più ammaccature che idee. Poche anche quelle.
+S1g Hai giurato di proteggere il re. Speriamo che il re sappia correre.
+R1e Ti chiamano «il Macellaio»? Al massimo affetti il salame.
+A0x Nel tuo elmo vive una famiglia di ratti. Ti hanno lasciato lo sfratto.
+S0g Cavaliere senza macchia e senza paura. Ma anche senza un perché.
+R2i Sei un soldato di merda: anche i tuoi stivali ti abbandonerebbero in battaglia.
+C1g Un applauso al campione del torneo locale! Eravate in due, giusto?
+A1g Il tuo cavallo ti porta in battaglia solo perché con te in groppa si scappa prima.
+R1a Con quell'armatura sembri una pentola con una crisi d'identità.
+S0d Sei un bandito di livello 1. Ed è l'unico livello che vedrai.
+
+@boss any
+S0g Un trono, una fortezza, un esercito. E nessuno che ti ascolti fino alla fine.
+R1e Hai un piano per conquistare il mondo e nessun piano per farti voler bene.
+A0g Il tuo covo segreto ha l'insegna luminosa e il parcheggio per i draghi.
+S0t Ridi come il cattivo di un'operetta. Ti pagano o lo fai per passione?
+R1g Sei il boss finale di un dungeon che nessuno ricorderà.
+C0g Ragazzi, il boss finale! Mi aspettavo di più. Credo anche lui.
+A0i I tuoi scagnozzi ti obbediscono solo perché il contratto ha una penale.
+S1e Il tuo ritratto nella sala del trono è più grande del tuo regno.
+R1g Il tuo esercito di non-morti ti segue senza lamentarsi. Non hanno più la bocca.
+A0g Il tuo mantello nero è così lungo che inciampi nelle tue stesse minacce.
+S0g Hai aspettato cento anni questo momento. Ne valeva la pena? Spoiler: no.
+R2e Sei un signore oscuro di merda: castello, armata e nemmeno un amico.
+C1g Ve lo dico io come finisce, gente: lui fa il monologo, noi lo picchiamo, titoli di coda.
+A1g Un bardo ha registrato la tua risata malvagia. La usano come ninna nanna.
+R1i Un piano malvagio perfetto, e hai dimenticato di chiudere la porta sul retro.
+S0d Hai le azioni leggendarie. L'unica cosa leggendaria qui è la noia.
+
+@oggetti any
+S0g Un'armatura animata, senza nessuno dentro. Proprio come i tuoi ragionamenti.
+R1g Sei una scopa animata. Spazza via almeno la tua dignità.
+A0g Sei un forziere mimic, e l'unica cosa preziosa che hai dentro è la polvere.
+S0g Un tappeto volante che attacca: finalmente qualcosa di più fastidioso di un tappeto normale.
+R1i Sei una spada volante che non sa dove andare. Come il tuo vecchio padrone.
+C0g Gente, l'arredamento si è ribellato! Qualcuno chiami un rigattiere.
+A0e Ti credi una reliquia preziosa. Sei un soprammobile con le convulsioni.
+S1g Sei una statua animata. Stavi benissimo ferma: chi te l'ha fatto fare?
+R1g Ti si sente arrivare dallo scricchiolio. Come una sedia che vuole litigare.
+A0d Sei un oggetto magico non comune. In bottega ti metterebbero nel cesto delle offerte.
+S0g Sei un oggetto animato. Il resto della stanza ha preferito non partecipare.
+R2g Sei un cazzo di soprammobile con manie di grandezza.
+C1g Facciamo un'asta! Chi offre due rame per questa armatura vuota e arrabbiata?
+A1g Sei un comodino che combatte con il carattere di un esattore delle tasse.
+R1a Sei così malridotto che persino una scopa si rifiuta di pulirti.
+S0d Immune a quasi tutto, tranne che al ridicolo.
+
+@fey any
+S0z Una fata! Che magia. Ah no, sono solo i tuoi brillantini nei miei occhi.
+R1z Sei il motivo per cui nei patti fatati servirebbe il diritto di recesso.
+A0z Hai le ali di una farfalla e il carattere di una vespa con il mal di denti.
+S0z Vieni dal Feywild? Che coincidenza: anche il mio mal di testa.
+R1z Sei bella come un sogno. Di quelli da cui ti svegli sudato.
+C0z Gente, una fata! Applaudite, altrimenti muore. Anzi, aspettate un attimo prima di applaudire.
+A0z La tua magia fatata funziona solo nelle notti di luna piena. E anche in quelle sei inutile.
+S1z Fai patti eterni con i mortali. Peccato che non ne rispetti neanche uno.
+R1z Saresti un folletto della corte d'estate? Sembri più che altro una zanzara di agosto.
+A0z Il tuo vero nome ha un grande potere. Quello finto fa solo ridere.
+S0z Un satiro: metà uomo, metà capra, interamente insopportabile.
+R1z La regina delle fate ti ha affidato una missione solo per toglierti dalla corte.
+C0z Qualcuno ha del ferro freddo? Niente di grave: voglio solo vederlo scappare.
+A0z Le tue ali brillano al sole. Anche le mosche sulla torta.
+S0z Le fate rapiscono i bambini. Tu invece li annoi finché non tornano a casa da soli.
+R2z Sei una fata del cazzo: persino il tuo cerchio fatato è fatto di funghi velenosi.
+A1z Un folletto dispettoso? Sei un sassolino nella scarpa, con le ali.
+S0z Dicono che le fate non possano mentire. Allora dimmi: sai fare qualcosa di utile?
+R1z La tua bellezza ultraterrena è un'illusione. E pure di bassa qualità.
+C1z Signore e signori, una ninfa! Il suo canto incanta tutti, tranne chi ha le orecchie.
+A0z Il tuo cerchio di funghi è così brutto che anche gli gnomi tirano dritto.
+S1z Vivi per sempre nel Feywild perché nel mondo normale ti avrebbero già cacciata.
+R1z Sei una megera vestita da fata. Il trucco si vede.
+A0d Sei un incontro casuale del Feywild: incantevole all'inizio, un disastro per tutti dopo.
+
+@any ingresso
+S0g Oh, finalmente! Il motivo per cui avevamo abbassato le aspettative.
+R1g È arrivato il pericolo. Ah no, ha mandato il sostituto.
+A0g La porta si è aperta e il buon gusto è scappato dalla finestra.
+C0g Fate largo, gente: è arrivato il nemico. O almeno, così dice lui.
+S0t Bella entrata. Adesso fanne una uguale, ma uscendo. Più veloce.
+R1a Che entrata d'effetto. Peccato che poi sia entrato anche tu.
+A0g Ti hanno annunciato con le trombe. Le trombe hanno chiesto scusa.
+S1g Ti aspettavamo. Non con ansia: con rassegnazione.
+C1g Tutti in piedi! No, non per rispetto: per scappare.
+R2g Ecco il coglione di turno, puntuale come la peste.
+A0d Il master ha tirato sulla tabella degli incontri ed è uscito il tuo nome. Gli dispiace.
+S0e Entri come se fosse il tuo palazzo. È una caverna, e non paghi nemmeno l'affitto.
+
+@any manca
+S0i Hai mancato. Non me: l'intera idea di colpire.
+R1i Complimenti: hai ferito l'aria. Sta piangendo.
+A0i Il muro dietro di me ti ringrazia per le attenzioni.
+C0i Qualcuno dia un premio al muro! È l'unico in pericolo qui.
+S0g Tranquillo, capita a tutti di sbagliare. A te capita per professione.
+R1i Con quella mira non colpiresti un drago nemmeno se ti si sedesse in braccio.
+A0d Hai tirato un 1? Guardandoti, direi che è il dado ad aver tirato te.
+S1i Bel colpo! A chi l'hai dedicato? Al vento?
+C1i Avete visto che finta? Ah no, non era una finta. Era il suo attacco migliore.
+R2i Hai mancato di nuovo, coglione: prova con il pavimento, che è grande.
+A0i Il tuo colpo è passato così lontano che è finito in un'altra campagna.
+S0x Tranquillo, la prossima volta andrà meglio. Te lo dico per pietà, ovviamente.
+
+@any incantesimo
+S0i Era un incantesimo o stavi starnutendo con le mani?
+R1i Hai sbagliato la formula. O forse il mestiere.
+A0g Volevi lanciare Palla di Fuoco e ti è uscito un fiammifero bagnato.
+C0i Gente, che spettacolo pirotecnico! Una scintilla e tanta vergogna.
+S0g Gli incantesimi richiedono concentrazione. Capisco il problema.
+R1s Hai sbagliato una parola magica. Strano: di solito sbagli frasi intere.
+A0d Hai sprecato uno slot incantesimo. Come la tua istruzione.
+S1i Lo so, la magia è difficile. Soprattutto per chi non ha talento.
+C1i Applausi! Ha appena inventato un nuovo incantesimo: Nulla di Fatto.
+R2i Hai lanciato un incantesimo di merda: ha riso perfino il mio cappello.
+A0g La tua magia ha fatto «puf». Non come un'esplosione: come un sospiro.
+S0e Grande mago, piccola scintilla. Di sicuro è colpa del bastone.
+
+@any ferito
+S0g Ti fa male? Bene. È la prima cosa sensata che senti oggi.
+R1g Perdi sangue come una botte bucata, e servi a uguale.
+A0g Ops, ti è caduto qualcosa. Ah no, era un pezzo di te.
+C0g Guardate, gente: anche lui sanguina. Quindi è umano. Più o meno.
+S0t Non piangere: le lacrime non curano le ferite. Né la vergogna.
+R1i Ti hanno colpito di nuovo? Dovresti farti pagare a colpo.
+A0d Ti restano pochi punti ferita. E ancora meno punti stile.
+S1g Fa male l'orgoglio, eh? Aspetta che arrivi la spada.
+C1g Chi aveva scommesso che avrebbe sanguinato prima di pranzo? Offre da bere.
+R2g Sanguini come un maiale, e strilli pure uguale.
+A0g Quel graffio guarirà. Il tuo amor proprio, invece, è da buttare.
+S0m Coraggio, non è una ferita mortale. Dagli tempo.
+
+@any terra
+S0g Così sei finito a terra. Almeno lì sei al tuo livello.
+R1g Resta lì. Il pavimento ha più dignità di te in piedi.
+A0g La gravità ti ha scelto come esempio per le sue lezioni.
+C0g Facciamo un ritratto! Il nemico a terra, momento storico. Breve, ma storico.
+S0t Non alzarti per me. Anzi, non alzarti proprio.
+R1i Sei caduto con una grazia che neanche un sacco di patate.
+A0d Sei prono: svantaggio agli attacchi. Non che prima cambiasse molto.
+S1g Ti aiuterei a rialzarti, ma il pavimento finalmente ti apprezza.
+C1g Qualcuno gli porti un cuscino: già che ci sta così bene, almeno che stia comodo.
+R2g Stai giù, stronzo: il fango ti dona.
+A0g Il pavimento ti cercava. Diceva che sentiva la tua mancanza.
+S0e Inginocchiarsi è un gesto nobile. Tu ci sei arrivato di faccia.
+
+@any curato
+S0g Ti hanno curato? Peccato, stavi migliorando.
+R1g Una pozione di cura su di te è uno spreco di risorse naturali.
+A0g Il chierico ti ha guarito e ha chiesto di poter guarire anche dalla tua compagnia.
+C0g Qualcuno controlli la scadenza di quella pozione. Speriamo sia scaduta.
+S0i Ti rimettono in piedi solo per vederti cadere di nuovo. È intrattenimento.
+R1s Puoi curare le ferite, ma non la stupidità: anche la magia ha dei limiti.
+A0d Hai recuperato punti ferita. Purtroppo non quelli di simpatia.
+S1g Curare te è come dare una mano di vernice a una catapecchia.
+C1g Un applauso al guaritore! Ha rimesso insieme l'idiota. Bel lavoro, ma perché?
+R2g Ti hanno rimesso in sesto: ora sei uno stronzo nuovo di zecca.
+A0g Ti hanno curato con tanto amore. Si vede che non ti conoscono.
+S0t Ti senti meglio? Bene: così la prossima botta la senti tutta.
+
+@any rinforzi
+S0g Ah, i rinforzi. Perché sbagliare da soli quando si può sbagliare in compagnia?
+R1g Hai chiamato aiuto? Allora il tuo orgoglio è già morto.
+A0g Più nemici, più bersagli. Ho portato un sacco grande per le vostre scuse.
+C0g Tranquilli, gente: sono arrivati i rinforzi. È il cugino scemo.
+S0i Ti servono altri dieci come te? Allora siete in undici a non valere niente.
+R1s Avete trovato il coraggio in gruppo. Peccato che con il cervello non funzioni così.
+A0d Il master ha aggiunto altri nemici per pietà. Non per voi: per noi, che ci annoiavamo.
+S1g Più siete, più ci divertiamo. E più tempo ci vuole per contare i cadaveri.
+C1g Venite, venite, nella fossa c'è posto per tutti!
+R2g Siete tanti e tutti coglioni: una vera festa di paese.
+A0g Avete portato gli amici. Peccato: ora vi vedranno perdere in tanti.
+S0e Hai chiamato i rinforzi? Ammetti che da solo non vali niente.
+
+@any monologo
+S0g Interessante monologo. Dove si chiede il rimborso del biglietto?
+R1e Ti piace così tanto parlare di te che dovresti sposare il tuo specchio.
+A0g Il tuo piano malvagio ha più capitoli di un almanacco e meno colpi di scena.
+C0g Mettetevi comodi, ragazzi: il cattivo sta per spiegarci tutto. Due volte.
+S0t Stai facendo il monologo. Lo sai che è proprio adesso che perdi?
+R1g Il tuo discorso è così lungo che le guardie si sono sedute.
+A0d Il master sta leggendo il tuo monologo da tre pagine. Si è commosso solo lui.
+S1g Questo discorso l'hai provato davanti allo specchio? Lo specchio ti ha chiesto di smettere.
+C1g Svegliatemi quando arriva al punto. Se ci arriva.
+R2g Chiudi quella cazzo di bocca, ci stai annoiando a morte.
+A0g Più parli, più il tuo piano malvagio sembra la lista della spesa.
+S0e Hai un piano geniale? Allora sbrigati a usarlo: noi abbiamo un'ascia.
+
+@any any
+D0a Sei un foruncolo, una piaga della peste. ~ Shakespeare, Re Lear
+D0t In te non c'è più lealtà che in una prugna cotta. ~ Shakespeare, Enrico IV, parte I
+D0s Il tuo cervello è secco come l'ultimo biscotto rimasto dopo un lungo viaggio per mare. ~ Shakespeare, Come vi piace
+D0p Ti picchierei, ma mi infetterei le mani. ~ Shakespeare, Timone d'Atene
+D0s Ancora un po' di conversazione con te e mi si infetta il cervello. ~ Shakespeare, Coriolano
+D0a Via di qui, sciocco alto tre pollici! ~ Shakespeare, La bisbetica domata
+D0s Il tuo ingegno è denso come la senape di Tewkesbury. ~ Shakespeare, Enrico IV, parte II
+D0a La tua faccia non vale nemmeno la fatica di abbronzarla. ~ Shakespeare, Enrico V
+D0a L'acidità della tua faccia farebbe inacidire l'uva matura. ~ Shakespeare, La commedia degli errori
+D0m Non sei adatto a nessun posto, se non all'inferno. ~ Shakespeare, Riccardo III
+D0a Tu, babbeo dalla faccia color panna! ~ Shakespeare, Macbeth
+D0a Grumo di laida deformità! ~ Shakespeare, Riccardo III
+D0s Signore dal cervello bollito, hai meno cervello di quanto io ne abbia nei gomiti. ~ Shakespeare, Troilo e Cressida
+D0t La tua lingua è più velenosa di tutti i serpenti del Nilo. ~ Shakespeare, Cimbelino
+D1p Vorrei che tu fossi abbastanza pulito da poterti sputare addosso. ~ Shakespeare, Timone d'Atene
+D0g Possa tu scoppiare! ~ Shakespeare, Timone d'Atene
+D0m Sei come una candela: migliori quando ti sei consumato. ~ Shakespeare, Enrico IV, parte II
+D0a Fuori dalla mia vista! Mi infetti gli occhi. ~ Shakespeare, Riccardo III
+D0a Hai una faccia da febbraio: tutta gelo, tempesta e nuvole. ~ Shakespeare, Molto rumore per nulla
+D0p Il più infame miscuglio di puzze che abbia mai offeso un naso. ~ Shakespeare, Le allegre comari di Windsor
+D0g Sei un'offesa universale, e chiunque dovrebbe prenderti a botte. ~ Shakespeare, Tutto è bene quel che finisce bene
+D0i Codardo matricolato, bugiardo senza fine, mancatore di promesse a ogni ora, privo di una sola buona qualità. ~ Shakespeare, Tutto è bene quel che finisce bene
+D1a Maiale che grufola, segnato dagli elfi, nato a metà! ~ Shakespeare, Riccardo III
+D0a Te lo dico all'orecchio, da amico: vendi finché puoi, non sei merce per tutti i mercati. ~ Shakespeare, Come vi piace
+D0a Mi sento male quando ti guardo. ~ Shakespeare, Sogno di una notte di mezza estate
+D1g Zeta bastarda, lettera inutile! ~ Shakespeare, Re Lear
+D0e Non ragioniam di lui, ma guarda e passa. ~ Dante, Inferno III (adattato)
+D0g Ahi, vituperio de le genti! ~ Dante, Inferno XXXIII
+D0i Tu sei di quelli che visser sanza 'nfamia e sanza lodo. ~ Dante, Inferno III (adattato)
+D1g Chiacchierone, ghiottone, rognoso, cacasotto, ubriacone, fannullone e leccapiatti! ~ alla maniera di Rabelais, Gargantua
+D0s Babbeo da fiera, tonto di bosco, zuccone di cavolo e acchiappamosche patentato! ~ alla maniera di Rabelais, Gargantua
+D0i Cacadubbi, mangiapane a tradimento, ciondolone e sbadiglione! ~ alla maniera di Rabelais, Gargantua
+
+@any any
+C0g Gente, ditemi la verità: anche voi lo pensavate più alto, quando ne parlavano male?
+C1i Alzi la mano chi ha mai perso contro di lui. Nessuno? Neanche sua madre a carte?
+C0a Chi gli ha fatto i capelli? Ditemelo, così non ci vado.
+C1p Prima fila, mi dispiace: per voi c'era scritto «posti sottovento» sul biglietto.
+C0e Facciamogli un applauso, ragazzi. Uno solo: non abituiamolo male.
+C1s Qualcuno ha portato un disegno? Perché a parole non ci arriva.
+C0d Domanda al pubblico: lo uccidiamo adesso o aspettiamo che si annoi da solo?
+C1f Sua madre è qui stasera? No? Strano, di solito viene a chiedere scusa.
+C0x Tutti a fare le corna, gente: parla lui, la sfiga è contagiosa.
+C1m Chi organizza il funerale? Serve qualcuno che sappia fare i discorsi brevi.
+C0t Guardatelo: si crede pericoloso. È commovente, no?
+C2g Ragazzi, un bel coro per lui: tre, due, uno… «stronzo»!
+C1g Chi è d'accordo che non vale nemmeno un incantesimo di primo livello dica «io».
+C0i Qualcuno gli tenga la spada mentre si allaccia le scarpe. Sono venti minuti che ci prova.
+C1a Fate silenzio, per favore: il nostro ospite sta cercando di sembrare minaccioso.
+C0g Una domanda per voi, amici: conviene ucciderlo o metterlo in una gabbia e farlo vedere alle fiere?
+R2g Sei una merda d'uomo, e sto offendendo la merda.
+R2s Hai il cervello piccolo come il cazzo di un coboldo, e con meno iniziativa.
+R2a Sei così brutto che tua madre ti allattava con la fionda.
+R2i Combatti di merda, parli di merda e probabilmente cucini anche di merda.
+R2e Ti credi un dio, ma sei solo un coglione con una buona illuminazione.
+R2f Tuo padre ha preso a calci la cicogna quando ti ha portato. E aveva ragione.
+R2t Fai il gradasso, ma ti cachi addosso appena qualcuno alza la voce.
+R2x Hai una sfiga così nera che ti cade la merda sulla testa anche quando piove.
+R2d Hai tirato così di merda che i dadi hanno chiesto il trasferimento a un altro tavolo.
+R2m Quando crepi, ti seppelliscono a faccia in giù, così anche i vermi evitano di guardarti.
+S0g Ti direi di andare al diavolo, ma il diavolo mi ha chiesto un favore.
+S0g Sei una persona unica. Lo dicono tutti con un certo sollievo.
+S1g Ho conosciuto dei sassi con più conversazione. E alcuni rispondevano pure.
+S0i Hai una grande carriera davanti. Peccato che tu la stia guardando dal fondo.
+S0s Sei sveglio come una lumaca dopo il pranzo di Natale.
+S0e Hai un fan club di una persona. E lo presiedi tu.
+S0f La tua famiglia ti ha cresciuto con amore. Poi è finito.
+S1m La tua vita è un capolavoro. Di quelli che si capiscono solo dopo la morte, e neanche.
+S0x Hai trovato una lampada magica. Il genio ha chiesto tre desideri a te.
+S0t Ti comporti come il protagonista. Ma sei la comparsa che chiede indicazioni.
+S0d Se la tua vita fosse una campagna, il gruppo avrebbe già cambiato master.
+A0g Sei come un temporale in un ufficio: rumoroso, inutile e alla fine bagni solo i fogli.
+A0i Hai la stessa utilità di una scala in una nave che affonda.
+A0s Le tue idee sono come i draghi: tutti ne parlano, nessuno le ha mai viste.
+A0a Le gargoyle della cattedrale ti hanno chiesto di non posare vicino a loro: si sentono belle per contrasto.
+A0e Se il tuo ego fosse un incantesimo, richiederebbe concentrazione. E tu non ne hai.
+A0f Il tuo albero genealogico ha un solo ramo. Ed è secco.
+A0m La tua lapide avrà scritto «Ci ha provato». E sotto un asterisco.
+A0x Se cadessi in un pozzo dei desideri, il pozzo esprimerebbe il desiderio di sputarti fuori.
+A0t La tua aura di minaccia è così debole che una lucciola fa più paura.
+A0d Il tuo personaggio è stato tirato fuori da un sacchetto di dadi dimenticato in cantina.
+A1g Se fossi una birra, saresti quella lasciata aperta da ieri sera.
+A1p Il tuo odore ha un suo allineamento: caotico disgustoso.
+R1g Sei come il vino della taverna più economica: chi ti assaggia si pente subito.
+R1i Ti avrei sconfitto prima, ma volevo vedere fino a che punto arrivava la tua incompetenza.
+R1s Hai un'intelligenza da coboldo. Senza offesa per i coboldi.
+R1a Ti hanno fatto il ritratto e il pittore ha chiesto di essere pagato in giorni di vacanza.
+R1e Ti chiami da solo «il Magnifico». Gli altri ti chiamano «quello là».
+R1f I tuoi parenti ti invitano alle feste per avere qualcuno da criticare.
+R1m Morirai con dignità? Sarebbe la prima volta.
+R1x Persino la tua ombra ha provato a staccarsi da te.
+R1t Hai lo sguardo da duro di un gattino bagnato.
+R1d Il master ti ha dato un nome solo per sbaglio. Doveva scriverlo sulla lista della spesa.
+R1p Hai fatto il bagno? Sì, ma solo nel fango.
+S0p Sei il motivo per cui i nani non si tolgono mai l'elmo.
+S1a Sei un incanto. Peccato che sia una maledizione.
+S0a Hai una bellezza che viene da dentro. E lì dentro dovrebbe restare.
+
+@any any
+C1g Allora, oste: un giro per tutti, tranne che per lui. Lui ha già bevuto abbastanza dell'acqua del vaso.
+S0g Bevi come un nano e combatti come un nano. Un nano ubriaco, intendo.
+R1g Hai la stessa simpatia della locanda che ci ha fatto pagare la stanza con le cimici.
+A0g Ti ho incontrato in una taverna e ho subito chiesto all'oste se si accettavano reclami.
+S1g Sei l'unica cosa più acida della birra di questa locanda.
+R2g Sei il tipo di cliente per cui l'oste piscia nella birra. E ha ragione.
+C0g Ragazzi, offriamogli un boccale: magari ubriaco diventa simpatico. Magari.
+A1g Se le birre parlassero, tu saresti la schiuma: tanto rumore e poi più niente.
+
+@goblin any
+S0s Sei un coboldo intelligente. Sai contare fino a tre, a volte anche in ordine.
+R1a Ti hanno disegnato su un cartello «Attenti al goblin»: la gente ride invece di scappare.
+A0g Hai rubato solo calzini spaiati. Anche il tuo bottino è triste.
+
+@maghi any
+R1i Hai sbagliato l'incantesimo così tante volte che il tuo libro ti chiama per nome. Il cognome è «di nuovo».
+A0s La tua sfera di cristallo vede il futuro. Nessuno dei futuri ti vede vincente.
+S0e Ti sei fatto fare un mantello con le stelle. Le stelle hanno chiesto di essere rimosse.
+
+@draghi any
+S0f I draghi vivono mille anni. Tua madre ne ha passati novecento a chiedersi dove avesse sbagliato.
+A0g Hai il soffio di un drago e la personalità di una stufa.
+
+@demoni any
+S0g Sei così malvagio che ti hanno cacciato dall'Inferno per eccesso di zelo. Scherzo: era per antipatia.
+A0d Il tuo nome vero ha potere su di te. Il mio soprannome per te ha potere su tutti: «Il Noioso».
+
+@fey any
+S0z Una fata del bosco! Bello. Il bosco ti cerca, vuole restituirti.
+A0z Hai rubato un bambino e l'hai riportato il giorno dopo. Persino lui si annoiava.
+R1z Sei così inaffidabile che anche le tue promesse fatate hanno un'etichetta «non garantito».
+C1z Gente, attenti: se accettate un suo regalo, vi tocca sentirla parlare per cento anni.

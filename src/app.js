@@ -377,7 +377,7 @@ document.addEventListener('keydown',ev=>{if(ev.key!=='Escape')return;if(!$('#ask
 /* Tastiera fisica: 1-9, 0, Q, W, E dal basso (anche insieme); Maiusc = ottava sopra; Spazio = sacca */
 const KEYS='1234567890qwe';
 document.addEventListener('keydown',ev=>{
-  if(!sheet.hidden||!songsSheet.hidden||!$('#edMore').hidden||!$('#ask').hidden||ev.repeat||ev.metaKey||ev.ctrlKey||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName))return;
+  if(!sheet.hidden||!songsSheet.hidden||!$('#edMore').hidden||!$('#ask').hidden||!$('#mock').hidden||ev.repeat||ev.metaKey||ev.ctrlKey||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName))return;
   const k=ev.key.toLowerCase(),i=KEYS.indexOf(k);
   if(S.inst==='tamb'){
     if(i>=0){ev.preventDefault();if(!tambLoading()){tambStrike(i===0?.1:.65);songHit(-1);}}
@@ -938,6 +938,7 @@ $('#fileIn').addEventListener('change',async ev=>{
 /*__STORE__*/
 /*__CLOUD__*/
 /*__EDITOR__*/
+/*__MOCK__*/
 $('#backupIn').addEventListener('change',ev=>{const f=ev.target.files[0];ev.target.value='';if(f)importBackup(f);});
 $('#sbEdit').addEventListener('click',()=>{if(SM.raw)edOpen(SM.raw);});
 uiToggles();curIdx=S.inst==='pipes'?1:0;render();

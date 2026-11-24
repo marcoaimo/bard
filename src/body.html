@@ -3,6 +3,7 @@
     <label class="inst"><span class="vh">Strumento</span><select id="instSel">
       <option value="flute">Flauto di bambù</option><option value="rec">Flauto dolce</option><option value="pipes">Cornamusa</option><option value="tamb">Tamburello</option>
     </select></label>
+    <button class="gear" id="mockBtn" aria-label="Beffa crudele"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c2.5 1.2 5.2 1.6 8 1.6S17.5 6.2 20 5c0 7-2.6 13-8 14C6.6 18 4 12 4 5z"/><path d="M8 10.5c.8-.6 1.8-.6 2.6 0M13.4 10.5c.8-.6 1.8-.6 2.6 0"/><path d="M9 14.5c1.8 1.2 4.2 1.2 6 0"/></svg></button>
     <button class="gear" id="songsBtn" aria-label="Brani">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
     </button>
@@ -150,3 +151,27 @@
 <div class="ask" id="ask" role="alertdialog" aria-modal="true" aria-labelledby="askText" hidden>
   <div class="ask-box"><p id="askText"></p><div class="pair"><button class="mini ghost" id="askNo">Annulla</button><button class="mini" id="askOk">Conferma</button></div></div>
 </div>
+<section class="mock" id="mock" role="dialog" aria-modal="true" aria-labelledby="mkTitle" hidden>
+  <div class="mk-in">
+    <header class="mk-head"><div><p class="mk-kicker">Trucchetto da bardo</p><h2 id="mkTitle">Beffa crudele</h2></div><button class="sb-x" id="mkClose" aria-label="Chiudi">×</button></header>
+    <div class="mk-filters">
+      <label><span>Bersaglio</span><select id="mkCat"></select></label>
+      <label><span>Momento</span><select id="mkMoment"></select></label>
+      <label><span>Stile</span><select id="mkStyle"></select></label>
+      <label><span>Tema</span><select id="mkTopic"></select></label>
+    </div>
+    <div class="seg mk-heat" id="mkHeat" role="group" aria-label="Volgarità massima"><button data-h="0">Pulita</button><button data-h="1">Colorita</button><button data-h="2">Senza filtri</button></div>
+    <figure class="mk-card"><blockquote id="mkQuote" aria-live="polite"></blockquote><figcaption id="mkSrc"></figcaption><div class="mk-tags" id="mkTags"></div></figure>
+    <div class="mk-actions">
+      <button class="mk-go" id="mkGo">Nuova beffa</button>
+      <button class="mk-ico" id="mkFav" aria-pressed="false" aria-label="Aggiungi ai preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      <button class="mk-ico" id="mkCopy" aria-label="Copia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+      <button class="mk-ico" id="mkSay" aria-label="Leggi ad alta voce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+      <button class="mk-ico" id="mkDrum" aria-label="Ba-dum-tss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="8" ry="3"/><path d="M4 13v4c0 1.7 3.6 3 8 3s8-1.3 8-3v-4"/><path d="M8 3l3 7M17 3l-3 7"/></svg></button>
+    </div>
+    <div class="seg mk-tabs" id="mkTabs" role="tablist"><button role="tab" data-t="hist">Recenti</button><button role="tab" data-t="fav">Preferite<span id="mkFavCount"></span></button></div>
+    <ul class="mk-list" id="mkList"></ul>
+    <p class="note" id="mkCount"></p>
+  </div>
+  <div class="mk-toast" id="mkToast" role="status" hidden></div>
+</section>

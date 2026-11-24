@@ -263,3 +263,49 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 @media (prefers-reduced-motion:reduce){.ed-staff .caret{animation:none}}
 .sb-x.sb-edit{margin-right:0;display:grid;place-items:center}
 .row>.pair{flex:none;flex-wrap:nowrap;flex-direction:row;font-weight:700}.row>.pair .mini{padding:0 12px}
+
+/* Beffa crudele */
+.mock{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.mocking body{overflow:hidden}
+.mk-in{max-width:640px;margin:0 auto;padding:10px 16px 28px;display:flex;flex-direction:column;gap:12px}
+.mk-head{display:flex;justify-content:space-between;align-items:flex-start}
+.mk-kicker{margin:4px 0 0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.mk-head h2{margin:0;font-size:30px;font-weight:800;letter-spacing:-.02em;font-variation-settings:"opsz" 96}
+.mk-head .sb-x{width:44px;height:44px;font-size:28px;margin:0 -10px 0 0}
+.mk-filters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mk-filters label{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mk-filters span{font-size:12px;font-weight:600;color:var(--muted)}
+.mk-filters select{width:100%;min-width:0;height:44px;border:0;border-radius:12px;background:var(--btn);padding:0 10px;font-size:15px;font-weight:600}
+.mk-heat button{flex:1}
+.mk-card{margin:4px 0 0;background:var(--surface);border-radius:20px;padding:22px 20px 16px;min-height:210px;display:flex;flex-direction:column;justify-content:center;gap:10px;box-shadow:0 1px 0 var(--line)}
+.mk-card blockquote{margin:0;font-size:clamp(22px,6vw,30px);line-height:1.25;font-weight:700;letter-spacing:-.015em;text-wrap:balance}
+.mk-card blockquote.reveal{animation:mkin .28s ease-out both}
+@keyframes mkin{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mk-card figcaption{font-size:14px;color:var(--muted);font-style:italic}
+.mk-card figcaption:empty{display:none}
+.mk-tags{display:flex;flex-wrap:wrap;gap:6px}
+.mk-tags span{font-size:12px;font-weight:600;color:var(--muted);background:var(--btn);border-radius:999px;padding:4px 9px}
+.mk-actions{display:flex;gap:8px}
+.mk-go{flex:1;min-width:0;height:58px;border:0;border-radius:16px;background:var(--accent);color:#fff;font-size:17px;font-weight:800;white-space:nowrap}
+.mk-go:active{transform:translateY(1px)}
+.mk-actions{gap:6px}
+.mk-ico{flex:none;width:46px;height:58px;border:0;border-radius:16px;background:var(--btn);color:var(--ink);display:grid;place-items:center}
+.mk-ico svg{width:24px;height:24px}
+.mk-ico[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.mk-ico[aria-pressed="true"] svg path{fill:currentColor}
+.mk-tabs{margin-top:8px}
+.mk-tabs button{flex:1}
+.mk-tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.mk-list{list-style:none;margin:0;padding:0}
+.mk-list li{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}
+.mk-list p{margin:0;font-size:15px;line-height:1.35}
+.mk-list small{display:block;margin-top:3px;font-size:12px;color:var(--muted);font-style:italic}
+.mk-list .pair{flex:none}
+.mk-list .mini{min-height:38px;width:38px;padding:0}
+.mk-list .mini svg{width:18px;height:18px}
+.mk-list .mini[aria-pressed="true"]{color:var(--accent)}
+.mk-list .mini[aria-pressed="true"] svg path{fill:currentColor}
+.mk-list li.mk-empty{color:var(--muted);font-size:14px;border:0;justify-content:flex-start}
+.mk-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;z-index:31}
+@media (max-width:360px){.mk-ico{width:40px}.mk-go{font-size:15px}.mk-filters select{font-size:14px}}
