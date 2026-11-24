@@ -248,7 +248,7 @@ function mkFillSelects(){
 }
 function mkCount(){
   const mine=liveBeffe().filter(r=>!r.base&&!r.hidden).length;
-  $('#mkCount').textContent=BEFFE.length+' beffe incluse, di cui '+BEFFE.filter(j=>j.style==='autore').length+' d’autore da Shakespeare, Dante e Rabelais'
+  $('#mkCount').textContent=BEFFE.length+' beffe incluse, di cui '+BEFFE.filter(j=>j.style==='autore').length+' d’autore da Shakespeare, Dante, Manzoni, Wilde e altri classici'
     +(mine?', più '+mine+(mine===1?' scritta da te':' scritte da te'):'')+'. Funzionano anche offline.';
 }
 function mkHeatUI(){document.querySelectorAll('#mkHeat button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.h===MK.heat));}

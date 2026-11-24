@@ -640,3 +640,56 @@ S0z Una fata del bosco! Bello. Il bosco ti cerca, vuole restituirti.
 A0z Hai rubato un bambino e l'hai riportato il giorno dopo. Persino lui si annoiava.
 R1z Sei così inaffidabile che anche le tue promesse fatate hanno un'etichetta «non garantito».
 C1z Gente, attenti: se accettate un suo regalo, vi tocca sentirla parlare per cento anni.
+
+# Altre beffe d'autore: testi di pubblico dominio, verificati sulle edizioni originali.
+# Italiano citato nell'originale; inglese, francese e spagnolo tradotti per questa app.
+@any any
+D0g Mi auguro che si possa diventare estranei migliori. ~ Shakespeare, Come vi piace
+D0a Non vali la polvere che il vento ti soffia in faccia. ~ Shakespeare, Re Lear
+D0m Va', e occupa un'altra stanza all'inferno. ~ Shakespeare, Riccardo II
+D0s Sei il re di tutti i pazzi viventi. ~ Shakespeare, Timone d'Atene
+D0a Formaggio di Banbury! ~ Shakespeare, Le allegre comari di Windsor
+D1p Via di qui, mascalzone ammuffito, via! ~ Shakespeare, Enrico IV, parte II
+D0s Ceppi! Sassi! Peggio che cose senza sensi! ~ Shakespeare, Giulio Cesare
+D0t Taci, maledetto lupo! consuma dentro te con la tua rabbia. ~ Dante, Inferno VII
+D0g Via costà con li altri cani! ~ Dante, Inferno VIII
+D1p Ed elli avea del cul fatto trombetta. ~ Dante, Inferno XXI
+D0a Vita bestial ti piacque e non umana, sì come a mul che fosti. ~ Dante, Inferno XXIV (adattato)
+D0t Tu non sei nato con un cuor di leone. ~ Manzoni, I promessi sposi, cap. I (adattato)
+D0x Sei come un vaso di terra cotta, costretto a viaggiare in compagnia di molti vasi di ferro. ~ Manzoni, I promessi sposi, cap. I (adattato)
+D0e Carneade! Chi era costui? ~ Manzoni, I promessi sposi, cap. VIII
+D0t Il coraggio, uno non se lo può dare. ~ Manzoni, I promessi sposi, cap. XXV
+D0s Sei un burattino e, quel che è peggio, hai la testa di legno. ~ Collodi, Le avventure di Pinocchio, cap. IV (adattato)
+D0t Vi sono le bugie che hanno le gambe corte, e le bugie che hanno il naso lungo. La tua ce l'ha lunghissimo. ~ Collodi, Le avventure di Pinocchio, cap. XVII (adattato)
+D0s Il tuo senno è sulla Luna, accanto a quello di Orlando. Nell'ampolla più piccola. ~ alla maniera di Ariosto, Orlando furioso
+D0s Sei più credulone di Calandrino con la pietra elitropia. ~ alla maniera di Boccaccio, Decameron
+D0s Ma che diavolo andava a fare su quella galera? ~ Molière, Le furberie di Scapino
+D0s Ignorantus, ignoranta, ignorantum! ~ Molière, Il malato immaginario
+D0f Perdere un genitore può considerarsi una disgrazia; perderli entrambi sembra trascuratezza. ~ Wilde, L'importanza di chiamarsi Ernesto
+D0s Non approvo nulla che alteri l'ignoranza naturale. L'ignoranza è come un delicato frutto esotico: lo tocchi e il fiore svanisce. ~ Wilde, L'importanza di chiamarsi Ernesto
+D0t Hai una natura assolutamente frivola. ~ Wilde, L'importanza di chiamarsi Ernesto
+D0a Ho conosciuto diversi come te, e tutti, senza eccezione, erano brutti più del solito. ~ Wilde, L'importanza di chiamarsi Ernesto (adattato)
+D0a Passabile, ma non abbastanza bello da tentarmi. ~ Austen, Orgoglio e pregiudizio (adattato)
+D0i Ci hai deliziato abbastanza. ~ Austen, Orgoglio e pregiudizio
+D0g Non ti conoscevo da un mese e già sentivo che eri l'ultimo uomo al mondo che avrei mai accettato di sposare. ~ Austen, Orgoglio e pregiudizio
+D0t Vecchio peccatore avaro, che spreme, strappa, afferra, raschia e artiglia! ~ Dickens, Canto di Natale
+D1g Ogni idiota che va in giro con «Buon Natale» sulle labbra dovrebbe essere bollito insieme al suo budino. ~ Dickens, Canto di Natale
+D0g L'uomo è l'unico animale che arrossisce. O che ne ha bisogno. ~ Mark Twain, Seguendo l'equatore
+D0g Noioso, sostantivo: persona che parla quando vorresti che ascoltasse. ~ Bierce, Dizionario del diavolo
+D0e Egoista, sostantivo: persona di gusti volgari, più interessata a se stessa che a me. ~ Bierce, Dizionario del diavolo
+D0s Convinto, aggettivo: in errore, a pieni polmoni. ~ Bierce, Dizionario del diavolo
+D0g Conoscente, sostantivo: persona che conosciamo abbastanza da chiederle un prestito, ma non abbastanza da prestarle qualcosa. ~ Bierce, Dizionario del diavolo
+D0s Filosofia, sostantivo: una strada dalle molte vie che portano dal nulla al niente. ~ Bierce, Dizionario del diavolo
+D0x Anno, sostantivo: un periodo di trecentosessantacinque delusioni. ~ Bierce, Dizionario del diavolo
+
+@spettri any
+D0g Sei più indigestione che apparizione, qualunque cosa tu sia! ~ Dickens, Canto di Natale (adattato)
+
+@boss any
+D0g I re sono quasi tutti dei mascalzoni, per quanto ne so io. ~ Mark Twain, Le avventure di Huckleberry Finn
+
+@any rinforzi
+D0t Non fuggite, codardi e vili creature: è un solo cavaliere quello che vi assale. ~ Cervantes, Don Chisciotte, cap. VIII
+
+@any monologo
+D0g Fama di loro il mondo esser non lassa: non ragioniam di lor, ma guarda e passa. ~ Dante, Inferno III
