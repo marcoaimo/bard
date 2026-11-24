@@ -1,0 +1,17 @@
+{
+  "name": "Fiati tascabili",
+  "short_name": "Fiati",
+  "description": "Flauto di bambù, flauto dolce, cornamusa e tamburello da suonare sul telefono, con brani ed editor di spartiti.",
+  "lang": "it",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E3E8D8",
+  "theme_color": "#1C2820",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

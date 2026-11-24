@@ -1,0 +1,152 @@
+<div id="app">
+  <div class="top">
+    <label class="inst"><span class="vh">Strumento</span><select id="instSel">
+      <option value="flute">Flauto di bambù</option><option value="rec">Flauto dolce</option><option value="pipes">Cornamusa</option><option value="tamb">Tamburello</option>
+    </select></label>
+    <button class="gear" id="songsBtn" aria-label="Brani">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
+    </button>
+    <button class="gear" id="gear" aria-label="Impostazioni">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+    </button>
+  </div>
+
+  <div class="songbar" id="songbar" hidden>
+    <div class="sb-row">
+      <button class="sb-play" id="sbPlay" aria-label="Ascolta il brano"></button>
+      <button class="sb-ico" id="sbRestart" aria-label="Ricomincia dall’inizio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12a7 7 0 1 0 2.1-5"/><path d="M5 4v4h4"/></svg></button>
+      <div class="seg sb-mode" id="sbMode" role="group" aria-label="Modalità"><button data-m="listen" aria-pressed="true">Ascolta</button><button data-m="along" aria-pressed="false">Suona con me</button></div>
+      <button class="sb-ico" id="sbView" aria-pressed="false" aria-label="Mostra il pentagramma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 7h18M3 11h18M3 15h18"/><ellipse cx="9" cy="15.5" rx="2.6" ry="2" fill="currentColor" stroke="none" transform="rotate(-20 9 15.5)"/><path d="M11.4 14.6V4.5"/></svg></button>
+    </div>
+    <div class="sb-follow" id="sbFollow" data-view="notes">
+      <div class="sb-meta"><span class="sb-title" id="sbTitle"></span><span class="sb-count" id="sbCount"></span><button class="sb-chip" id="sbTempo">Velocità 100%</button><button class="sb-x sb-edit" id="sbEdit" aria-label="Modifica lo spartito"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button><button class="sb-x" id="sbClose" aria-label="Chiudi il brano">×</button></div>
+      <div class="sb-seq"><span class="now" id="sbNow"></span><span class="nx" id="sbNext"></span><span class="obh" id="sbOb" hidden>con Soffio forte</span></div>
+      <svg class="sb-staff" id="sbStaff" aria-hidden="true"></svg>
+      <div class="sb-prog"><i id="sbBar"></i></div>
+    </div>
+  </div>
+
+  <div class="editor" id="editor" hidden>
+    <div class="ed-head">
+      <input class="ed-title" id="edTitle" maxlength="120" aria-label="Titolo dello spartito" autocomplete="off">
+      <label class="ed-bpm"><input id="edBpm" type="number" min="30" max="300" inputmode="numeric" aria-label="Tempo in battiti al minuto"><span>bpm</span></label>
+      <button class="ed-save" id="edDone">Salva</button>
+      <button class="sb-x" id="edClose" aria-label="Chiudi l’editor">×</button>
+    </div>
+    <div class="ed-staffbox">
+      <div class="ed-wrap" id="edWrap"><svg class="ed-staff" id="edStaff" height="92" aria-label="Pentagramma: tocca una nota per selezionarla"></svg></div>
+      <div class="ed-status" id="edStatus" aria-live="polite"></div>
+    </div>
+    <div class="ed-tools" id="edDurs">
+      <button data-d="4" aria-label="Semibreve, 4 tempi"></button><button data-d="2" aria-label="Minima, 2 tempi"></button><button data-d="1" aria-label="Semiminima, 1 tempo"></button><button data-d="0.5" aria-label="Croma, mezzo tempo"></button><button data-d="0.25" aria-label="Semicroma, un quarto di tempo"></button>
+      <button id="edDot" aria-label="Puntata, allunga di metà"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="3" fill="currentColor"/></svg></button>
+      <button id="edRest" class="wide" aria-label="Aggiungi una pausa">Pausa</button>
+    </div>
+    <div class="ed-tools">
+      <button id="edLeft" aria-label="Nota precedente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button id="edRight" aria-label="Nota successiva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button id="edUp" aria-label="Alza di un semitono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      <button id="edDown" aria-label="Abbassa di un semitono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+      <button id="edDel" aria-label="Elimina la nota selezionata"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+      <button id="edUndo" aria-label="Annulla l’ultima modifica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+      <button id="edPlay" class="accent" aria-label="Ascolta da qui"></button>
+      <button id="edMoreBtn" aria-label="Altre azioni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+
+  <div class="play" id="play">
+    <div class="readout idle" id="readout" aria-live="polite"><span class="rn">–</span><span class="rs">&nbsp;</span></div>
+    <div class="tube" aria-hidden="true">
+      <div class="bind t"></div><div class="mouth"></div><div class="window"></div>
+      <div class="node" style="top:40px"></div><div class="node" style="bottom:22px"></div>
+      <div class="bind b"></div><div class="ferrule"></div><div class="sole"></div>
+    </div>
+    <div class="bands" id="bands"></div>
+    <div class="tamb" id="tamb"><svg id="tambSvg" viewBox="-112 -112 224 224" aria-label="Tamburello: tocca per suonare" role="img">
+      <defs>
+        <radialGradient id="skin" cx="45%" cy="40%" r="65%"><stop offset="0" stop-color="#F4E9D0"/><stop offset=".75" stop-color="#E3CEA4"/><stop offset="1" stop-color="#C8AC79"/></radialGradient>
+        <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A86E35"/><stop offset=".55" stop-color="#7A4A1F"/><stop offset="1" stop-color="#5A3514"/></linearGradient>
+        <radialGradient id="zil" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#C9CDD2"/><stop offset="1" stop-color="#7A8088"/></radialGradient>
+      </defs>
+      <circle id="tring" r="110" fill="none" stroke="var(--accent)" stroke-width="4"/>
+      <g id="tgroup">
+        <circle r="106" fill="url(#wood)"/>
+        <circle r="86" fill="url(#skin)"/>
+        <circle r="86" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2"/>
+        <circle r="58" fill="none" stroke="rgba(90,60,20,.22)" stroke-width="1.5"/>
+        <g id="jingles"></g>
+      </g>
+    </svg></div>
+    <p class="hint" id="hint"><span id="hintText">Tocca un foro per suonare, più fori insieme per un accordo. Scorri per legare le note.</span></p>
+  </div>
+
+  <div class="bottom">
+    <div class="b-winds">
+      <button class="pad" id="ob"><b>Soffio forte</b><small>tieni premuto per l’ottava sopra</small></button>
+      <button class="chip" id="vibBtn" aria-pressed="true"><i></i>Vibrato</button>
+    </div>
+    <div class="b-tamb">
+      <button class="pad" id="rollBtn"><b>Rullo</b><small>tieni premuto per un tremolo</small></button>
+      <button class="chip" id="shakeBtn" aria-pressed="false"><i></i>Scuoti il telefono</button>
+    </div>
+    <div class="b-pipes">
+      <button class="pad" id="bagBtn"><b>Gonfia la sacca</b><small>accende i bordoni</small></button>
+      <button class="chip" id="drBtn" aria-pressed="true"><i></i>Bordoni</button>
+      <button class="chip" id="grBtn" aria-pressed="true"><i></i>Abbellimenti</button>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Impostazioni" hidden>
+  <header><h2>Impostazioni</h2><button class="done" id="done">Fatto</button></header>
+  <label class="row"><span>Volume</span><input type="range" id="vol" min="0" max="1" step="0.01"></label>
+  <label class="row"><span>Riverbero</span><input type="range" id="rev" min="0" max="1" step="0.01"></label>
+  <div class="g-winds">
+    <label class="row"><span>Tonalità<small>la nota più bassa del flauto</small></span>
+      <select id="key"><option value="60">Do</option><option value="62">Re</option><option value="64">Mi</option><option value="65">Fa</option><option value="67">Sol</option><option value="69">La</option></select></label>
+    <label class="row"><span>Scala</span>
+      <select id="scale"><option value="maj">Maggiore</option><option value="min">Minore naturale</option><option value="pmaj">Pentatonica maggiore</option><option value="pmin">Pentatonica minore</option><option value="chr">Cromatica</option></select></label>
+    <label class="row"><span>Vibrato<small>quanto oscilla la nota tenuta</small></span><input type="range" id="vib" min="0" max="1" step="0.01"></label>
+  </div>
+  <div class="g-pipes">
+    <label class="row"><span>Note del chanter</span>
+      <select id="pnotes"><option value="dia">Scala di Sol</option><option value="all">Tutte le note</option></select></label>
+    <label class="row"><span>Intonazione<small>naturale: com’è lo strumento, in armonia con i bordoni</small></span>
+      <select id="ptune"><option value="nat">Naturale</option><option value="et">Temperata</option></select></label>
+    <label class="row"><span>Sgonfia da sola<small>mezzo secondo dopo che hai alzato le dita</small></span><input type="checkbox" id="autoDef"></label>
+  </div>
+  <p class="note">Bambù: campioni di un’ocarina della collezione di Xavimart, registrata con Gonzalo e Roberto. Flauto dolce: campioni di un flauto in legno suonato da Eugene Vlaskin. Cornamusa: campioni di una cornamusa in Sol registrata da Gilles Sadowski. Tamburello: tamburello e darbuka dalla raccolta di percussioni di Xavimart, registrata con Gonzalo e Roberto. Tutti dal progetto FreePats, in pubblico dominio (CC0).</p>
+  <p class="note">Su iPhone, se non senti nulla, controlla che la modalità silenziosa sia disattivata.</p>
+</section>
+<section class="sheet" id="songsSheet" role="dialog" aria-modal="true" aria-label="Brani" hidden>
+  <header><h2>Brani</h2><button class="done" id="songsDone">Fatto</button></header>
+  <div class="actions"><button class="act" id="newSong">Nuovo spartito</button><label class="act upload"><input type="file" id="fileIn" accept=".mid,.midi,.xml,.musicxml,.mxl,.abc,.txt" multiple hidden><span>Carica spartiti</span></label></div>
+  <p class="note msg" id="songsMsg" role="status" hidden></p>
+  <h3 class="sh">I tuoi spartiti</h3>
+  <ul class="songs" id="userList"></ul>
+  <h3 class="sh">Da provare subito</h3>
+  <ul class="songs" id="sampleList"></ul>
+  <h3 class="sh">Archivio</h3>
+  <label class="row"><span>Solo i primi 30 secondi<small>accorcia gli spartiti mentre li carichi</small></span><input type="checkbox" id="trim30"></label>
+  <div class="row"><span>Backup<small>un file con tutti i tuoi spartiti</small></span><span class="pair"><button class="mini" id="exportBtn">Esporta</button><label class="mini"><input type="file" id="backupIn" accept=".json,application/json" hidden>Importa</label></span></div>
+  <div id="cloudBox" hidden>
+    <h3 class="sh">Sincronizzazione</h3>
+    <div id="cloudOut" class="cl-form"><input type="email" id="cloudMail" placeholder="la tua email" autocomplete="email" aria-label="Email"><button class="mini" id="cloudSend">Invia codice</button></div>
+    <div id="cloudCode" class="cl-form" hidden><input id="cloudOtp" inputmode="numeric" autocomplete="one-time-code" placeholder="codice dall’email" aria-label="Codice"><button class="mini" id="cloudVerify">Accedi</button><button class="link" id="cloudBack">Cambia email</button></div>
+    <div id="cloudIn" hidden><p class="cl-who">Connesso come <b id="cloudEmail"></b></p><div class="pair"><button class="mini" id="cloudNow">Sincronizza ora</button><button class="mini ghost" id="cloudExit">Esci</button></div></div>
+    <p class="note msg" id="cloudMsg" role="status" hidden></p>
+  </div>
+  <p class="note">Formati: MIDI, MusicXML (anche .mxl da MuseScore) e ABC. Da un MIDI prendo la traccia della melodia, da un MusicXML la prima parte. I ritornelli vengono ripetuti solo nei file ABC. Ogni brano viene adattato da solo all’estensione dello strumento.</p>
+</section>
+
+<section class="sheet" id="edMore" role="dialog" aria-modal="true" aria-label="Altre azioni dell’editor" hidden>
+  <header><h2>Altro</h2><button class="done" id="edMoreDone">Fatto</button></header>
+  <div class="row"><span>Trasponi<small>tutto lo spartito</small></span><span class="pair"><button class="mini" data-tr="-12">−8va</button><button class="mini" data-tr="-1">−1</button><button class="mini" data-tr="1">+1</button><button class="mini" data-tr="12">+8va</button></span></div>
+  <label class="row"><span>Metro<small>dove cadono le stanghette e l’accento del tamburello</small></span><select id="edMeter"><option value="2/4">2/4</option><option value="3/4">3/4</option><option value="4/4">4/4</option><option value="6/8">6/8</option></select></label>
+  <div class="row"><span>Taglia<small>rispetto alla nota selezionata</small></span><span class="pair"><button class="mini" id="edTrimBefore">Togli prima</button><button class="mini" id="edTrimAfter">Togli dopo</button></span></div>
+  <button class="danger" id="edDeleteSong">Elimina questo spartito</button>
+</section>
+<div class="ask" id="ask" role="alertdialog" aria-modal="true" aria-labelledby="askText" hidden>
+  <div class="ask-box"><p id="askText"></p><div class="pair"><button class="mini ghost" id="askNo">Annulla</button><button class="mini" id="askOk">Conferma</button></div></div>
+</div>
