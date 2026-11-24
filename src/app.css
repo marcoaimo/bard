@@ -309,3 +309,24 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .mk-list li.mk-empty{color:var(--muted);font-size:14px;border:0;justify-content:flex-start}
 .mk-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;z-index:31}
 @media (max-width:360px){.mk-ico{width:40px}.mk-go{font-size:15px}.mk-filters select{font-size:14px}}
+.mk-card{position:relative}
+.mk-card blockquote{padding-right:30px}
+.mk-edit-btn{position:absolute;top:10px;right:10px;width:40px;height:40px;border:0;border-radius:12px;background:transparent;color:var(--muted);display:grid;place-items:center}
+.mk-edit-btn svg{width:20px;height:20px}
+.mk-edit-btn:active{background:var(--btn)}
+.mk-new{margin:2px 0 0;min-height:48px}
+.mk-list li.mk-hidden p{opacity:.55;text-decoration:line-through;text-decoration-color:var(--muted)}
+.mk-list li.mk-hidden small{text-decoration:none}
+.mk-scrim{z-index:35}
+.sheet.mk-edit{z-index:36;max-height:92%;display:flex;flex-direction:column;gap:12px}
+.mk-edit header{margin-bottom:0}
+.mk-field{display:flex;flex-direction:column;gap:6px}
+.mk-field>span{font-size:12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.mk-field small{font-weight:400}
+.mk-field textarea,.mk-field input{width:100%;border:0;border-radius:12px;background:var(--btn);padding:12px;font-size:17px;line-height:1.35;font-weight:600;resize:vertical;min-height:44px}
+.mk-field textarea{min-height:96px}
+.mk-eactions{display:flex;gap:8px;justify-content:flex-start}
+.mk-edit .danger{margin-top:0}
+.mk-edit .note:empty{display:none}
+.mk-field textarea,.mk-field input{font-family:inherit;color:var(--ink);outline:none}
+.mk-field textarea:focus-visible,.mk-field input:focus-visible{box-shadow:0 0 0 2px var(--accent)}

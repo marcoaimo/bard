@@ -59,7 +59,7 @@ const Cloud={
         const ts=Date.parse(row.updated_at),loc=allRecs.find(r=>r.id===row.id);
         if(loc&&loc.dirty&&(loc.updatedAt||0)>ts)continue;
         const rec=row.deleted||!row.data?{id:row.id,title:row.title,deleted:true,updatedAt:ts,dirty:false}
-          :{id:row.id,title:row.title,by:row.data.by,bpm:row.data.bpm,meter:row.data.meter,ev:row.data.ev,deleted:false,updatedAt:ts,dirty:false};
+          :Object.assign({},row.data,{id:row.id,title:row.title,deleted:false,updatedAt:ts,dirty:false});
         changed.push(rec);upsertMem(rec);
       }
       if(changed.length)await Store.putMany(changed);
@@ -67,7 +67,7 @@ const Cloud={
       const dirty=allRecs.filter(r=>r.dirty);
       if(dirty.length){
         const rows=dirty.map(r=>({user_id:uid,id:r.id,title:String(r.title||'').slice(0,200),deleted:!!r.deleted,
-          data:r.deleted?null:{by:r.by||'',bpm:r.bpm,meter:r.meter||[4,4],ev:r.ev},updated_at:new Date(r.updatedAt||Date.now()).toISOString()}));
+          data:r.deleted?null:recPayload(r),updated_at:new Date(r.updatedAt||Date.now()).toISOString()}));
         const {error:e2}=await sb.from('songs').upsert(rows,{onConflict:'user_id,id'});
         if(e2)throw e2;
         dirty.forEach(r=>{r.dirty=false;});
@@ -76,6 +76,7 @@ const Cloud={
       }
       await Store.setMeta('lastPull',{uid,at:max});await Store.setMeta('lastSync',Date.now());
       if(!songsSheet.hidden)renderSongList();
+      if(typeof mkRefresh==='function')mkRefresh();
       uiCloud();
     }catch(e){
       const m=String(e&&e.message||e);
@@ -89,6 +90,8 @@ const Cloud={
     }
   }
 };
+/* Contenuto di un record da salvare nel cloud: tutto tranne i campi di servizio */
+function recPayload(r){const o={};for(const k in r)if(!['id','title','deleted','dirty','updatedAt'].includes(k))o[k]=r[k];return o;}
 function cloudMsg(t){const el=$('#cloudMsg');el.textContent=t||'';el.hidden=!t;}
 async function uiCloud(status){
   if(!Cloud.enabled())return;

@@ -32,7 +32,7 @@ Il piano gratuito di Supabase mette in pausa i progetti con poca attività per u
 ## Struttura
 
 - `src/`: sorgenti dell’app (stile, markup, codice, archivio, editor, sincronizzazione, brani d’esempio, beffe)
-  - `src/beffe.txt`: le beffe crudeli, una per riga, con bersaglio, momento, stile, volgarità e tema; le istruzioni sono in cima al file
+  - `src/beffe.txt`: le beffe crudeli incluse, una per riga, con bersaglio, momento, stile, volgarità e tema; le istruzioni sono in cima al file. Quelle che scrivi o modifichi dall’app restano nell’archivio del dispositivo, entrano nel backup e si sincronizzano con gli spartiti.
 - `build.py`: rigenera `docs/index.html`, `app.css`, `app.js`, `sw.js` e il manifest dai sorgenti; crea anche `artifact.html`, la versione a file unico
 - `docs/`: il sito pubblicato
   - `config.js`: configurazione della sincronizzazione

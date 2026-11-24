@@ -1,5 +1,5 @@
 /* Service worker: l’app funziona anche offline dopo la prima apertura */
-const VERSION='2a30069fa8';
+const VERSION='1884e6b8f4';
 const CACHE='fiati-'+VERSION;
 const SHELL=['./','index.html','app.css','app.js','config.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));});

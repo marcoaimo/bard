@@ -62,7 +62,9 @@ const Store=(()=>{
 
 /* Elenco in memoria: tutti i record, compresi gli spartiti eliminati in attesa di sincronizzazione */
 let allRecs=[];
-const liveSongs=()=>allRecs.filter(r=>!r.deleted).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+/* Nello stesso archivio stanno spartiti e beffe (kind: 'beffa'), così backup e sincronizzazione valgono per entrambi */
+const liveSongs=()=>allRecs.filter(r=>!r.deleted&&r.kind!=='beffa').sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+const liveBeffe=()=>allRecs.filter(r=>!r.deleted&&r.kind==='beffa').sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
 const newId=()=>'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function upsertMem(rec){const k=allRecs.findIndex(r=>r.id===rec.id);if(k>=0)allRecs[k]=rec;else allRecs.push(rec);}
 async function saveSongs(recs){
@@ -84,10 +86,12 @@ const storeReady=Store.init().then(recs=>{allRecs=recs;}).catch(()=>{allRecs=[];
 /* Backup: un file JSON con tutti gli spartiti, da esportare e reimportare */
 function exportBackup(){
   const songs=liveSongs().map(r=>({id:r.id,title:r.title,by:r.by,bpm:r.bpm,meter:r.meter,ev:r.ev,updatedAt:r.updatedAt}));
-  if(!songs.length){songsMsg('Non ci sono ancora spartiti tuoi da esportare.');return;}
-  const json=JSON.stringify({app:'fiati-tascabili',version:1,exported:new Date().toISOString(),songs});
-  const filename='fiati-spartiti-'+new Date().toISOString().slice(0,10)+'.json';
-  const done=()=>songsMsg(songs.length===1?'Esportato 1 spartito.':'Esportati '+songs.length+' spartiti.');
+  const beffe=liveBeffe().map(r=>Object.assign(recPayload(r),{id:r.id,title:r.title,updatedAt:r.updatedAt}));
+  if(!songs.length&&!beffe.length){songsMsg('Non ci sono ancora spartiti o beffe tuoi da esportare.');return;}
+  const json=JSON.stringify({app:'fiati-tascabili',version:2,exported:new Date().toISOString(),songs,beffe});
+  const filename='fiati-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  const n=(k,one,many)=>k===1?'1 '+one:k+' '+many;
+  const done=()=>songsMsg('Esportati '+[songs.length?n(songs.length,'spartito','spartiti'):'',beffe.length?n(beffe.length,'beffa','beffe'):''].filter(Boolean).join(' e ')+'.');
   if(window.FIATI_DOWNLOADS){ // dentro claude.ai: il file passa dal salvataggio della piattaforma
     window.FIATI_DOWNLOADS.save({filename,data:json}).then(done,e=>{
       if(e&&e.code!=='declined')songsMsg('Qui non posso salvare file: apri l’app dal sito pubblicato per esportare il backup.');});
@@ -100,9 +104,15 @@ function exportBackup(){
 async function importBackup(file){
   let data;
   try{data=JSON.parse(await file.text());}catch(_){songsMsg('Questo file non è un backup di Fiati tascabili.');return;}
-  if(!data||data.app!=='fiati-tascabili'||!Array.isArray(data.songs)){songsMsg('Questo file non è un backup di Fiati tascabili.');return;}
-  const take=[];let skipped=0;
-  for(const s of data.songs){
+  if(!data||data.app!=='fiati-tascabili'||(!Array.isArray(data.songs)&&!Array.isArray(data.beffe))){songsMsg('Questo file non è un backup di Fiati tascabili.');return;}
+  const take=[];let skipped=0,nb=0;
+  for(const s of data.beffe||[]){
+    if(!s||!s.id||typeof s.text!=='string'||!s.text.trim())continue;
+    const cur=allRecs.find(r=>r.id===s.id);
+    if(cur&&!cur.deleted&&(cur.updatedAt||0)>=(s.updatedAt||0)){skipped++;continue;}
+    take.push(beffaRec(Object.assign({},s,{id:String(s.id)})));nb++;
+  }
+  for(const s of data.songs||[]){
     if(!s||!s.id||!Array.isArray(s.ev)||!s.ev.length)continue;
     const cur=allRecs.find(r=>r.id===s.id);
     if(cur&&!cur.deleted&&(cur.updatedAt||0)>=(s.updatedAt||0)){skipped++;continue;}
@@ -111,7 +121,8 @@ async function importBackup(file){
   if(take.length&&!(await saveSongs(take)))return;
   renderSongList();
   const msg=[];
-  msg.push(take.length===1?'Importato 1 spartito.':'Importati '+take.length+' spartiti.');
+  const ns=take.length-nb;
+  msg.push('Importati '+ns+(ns===1?' spartito':' spartiti')+(nb?' e '+nb+(nb===1?' beffa':' beffe'):'')+'.');
   if(skipped)msg.push(skipped===1?'1 era già aggiornato.':skipped+' erano già aggiornati.');
   songsMsg(msg.join(' '));
 }
