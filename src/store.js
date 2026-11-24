@@ -62,7 +62,7 @@ const Store=(()=>{
 
 /* Elenco in memoria: tutti i record, compresi gli spartiti eliminati in attesa di sincronizzazione */
 let allRecs=[];
-/* Nello stesso archivio stanno spartiti e beffe (kind: 'beffa'), così backup e sincronizzazione valgono per entrambi */
+/* Spartiti e beffe (kind: 'beffa') convivono nell’archivio del dispositivo; nel cloud vanno in due tabelle separate */
 const liveSongs=()=>allRecs.filter(r=>!r.deleted&&r.kind!=='beffa').sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
 const liveBeffe=()=>allRecs.filter(r=>!r.deleted&&r.kind==='beffa').sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
 const newId=()=>'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
@@ -77,6 +77,7 @@ const saveSong=rec=>saveSongs([rec]);
 async function deleteSong(id){
   const r=allRecs.find(x=>x.id===id);if(!r)return;
   const tomb={id:r.id,title:r.title,deleted:true,updatedAt:Date.now(),dirty:true};
+  if(r.kind)tomb.kind=r.kind; // così l’eliminazione va nella tabella giusta
   upsertMem(tomb);
   try{await Store.putMany([tomb]);}catch(_){}
   Cloud.schedule();

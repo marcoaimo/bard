@@ -36,62 +36,89 @@ const Cloud={
   },
   async signOut(){
     const sb=await this.client();await sb.auth.signOut();
-    this.user=null;await Store.setMeta('lastPull',null);uiCloud();
+    this.user=null;await Store.setMeta('lastPull',null);await Store.setMeta('lastPull_beffe',null);uiCloud();
   },
   schedule(ms){
     if(!this.user)return;
     clearTimeout(this.timer);this.timer=setTimeout(()=>this.sync(),ms==null?1500:ms);
   },
+  /* Due tabelle: «songs» per gli spartiti e «beffe» per le beffe crudeli. Ognuna si sincronizza da sola. */
+  async syncTable(sb,uid,table){
+    const isBeffe=table==='beffe',mine=r=>(r.kind==='beffa')===isBeffe,metaKey=isBeffe?'lastPull_beffe':'lastPull';
+    const lp=await Store.getMeta(metaKey),since=lp&&lp.uid===uid?lp.at:'1970-01-01T00:00:00Z';
+    /* 1. Scarico quello che è cambiato altrove: vince la modifica più recente */
+    const {data,error}=await sb.from(table).select('id,title,data,deleted,updated_at,synced_at').gt('synced_at',since).order('synced_at');
+    if(error)throw error;
+    let max=since;const changed=[],moved=[];
+    if(isBeffe&&!(lp&&lp.uid===uid)){ // primo giro con la tabella delle beffe: ci porto quelle che avevo già
+      allRecs.filter(r=>r.kind==='beffa').forEach(r=>{r.dirty=true;r.fromSongs=true;});
+    }
+    for(const row of data||[]){
+      if(row.synced_at>max)max=row.synced_at;
+      const ts=Date.parse(row.updated_at),loc=allRecs.find(r=>r.id===row.id);
+      const strayBeffa=!isBeffe&&row.data&&row.data.kind==='beffa'; // beffe salvate per errore tra gli spartiti
+      if(!isBeffe&&loc&&loc.kind==='beffa'&&(row.deleted||strayBeffa)){if(strayBeffa&&!loc.fromSongs){loc.fromSongs=true;loc.dirty=true;changed.push(loc);}continue;}
+      if(loc&&loc.dirty&&(loc.updatedAt||0)>ts)continue;
+      let rec;
+      if(row.deleted||!row.data)rec={id:row.id,title:row.title,deleted:true,updatedAt:ts,dirty:false};
+      else rec=Object.assign({},row.data,{id:row.id,title:row.title,deleted:false,updatedAt:ts,dirty:false});
+      if(isBeffe)rec.kind='beffa';
+      if(strayBeffa)Object.assign(rec,{kind:'beffa',dirty:true,fromSongs:true}); // la porto nella tabella delle beffe
+      changed.push(rec);upsertMem(rec);
+    }
+    if(changed.length)await Store.putMany(changed);
+    /* 2. Invio le modifiche fatte su questo dispositivo */
+    const dirty=allRecs.filter(r=>r.dirty&&mine(r));
+    const rows=dirty.map(r=>({user_id:uid,id:r.id,title:String(r.title||'').slice(0,200),deleted:!!r.deleted,
+      data:r.deleted?null:recPayload(r),updated_at:new Date(r.updatedAt||Date.now()).toISOString()}));
+    if(rows.length){const {error:e2}=await sb.from(table).upsert(rows,{onConflict:'user_id,id'});if(e2)throw e2;}
+    if(isBeffe)dirty.forEach(r=>{if(r.fromSongs){moved.push(r.id);delete r.fromSongs;}}); // solo ora che sono al sicuro nella loro tabella
+    if(moved.length){ // tolgo dagli spartiti le beffe che ora stanno nella loro tabella
+      const now=new Date().toISOString();
+      const {error:e3}=await sb.from('songs').upsert(moved.map(id=>({user_id:uid,id,title:'',deleted:true,data:null,updated_at:now})),{onConflict:'user_id,id'});
+      if(e3)throw e3;
+    }
+    if(dirty.length){
+      dirty.forEach(r=>{r.dirty=false;});
+      const gone=dirty.filter(r=>r.deleted);allRecs=allRecs.filter(r=>!gone.includes(r));
+      await Store.putMany(dirty);
+    }
+    await Store.setMeta(metaKey,{uid,at:max});
+  },
   async sync(){
     if(!this.user||!navigator.onLine)return;
     if(this.busy){this.again=true;return;}
     this.busy=true;uiCloud('Sincronizzo…');
+    const errs=[];
     try{
       await storeReady;
       const sb=await this.client(),uid=this.user.id;
-      const lp=await Store.getMeta('lastPull'),since=lp&&lp.uid===uid?lp.at:'1970-01-01T00:00:00Z';
-      /* 1. Scarico quello che è cambiato altrove: vince la modifica più recente */
-      const {data,error}=await sb.from('songs').select('id,title,data,deleted,updated_at,synced_at').gt('synced_at',since).order('synced_at');
-      if(error)throw error;
-      let max=since;const changed=[];
-      for(const row of data||[]){
-        if(row.synced_at>max)max=row.synced_at;
-        const ts=Date.parse(row.updated_at),loc=allRecs.find(r=>r.id===row.id);
-        if(loc&&loc.dirty&&(loc.updatedAt||0)>ts)continue;
-        const rec=row.deleted||!row.data?{id:row.id,title:row.title,deleted:true,updatedAt:ts,dirty:false}
-          :Object.assign({},row.data,{id:row.id,title:row.title,deleted:false,updatedAt:ts,dirty:false});
-        changed.push(rec);upsertMem(rec);
+      for(const table of ['songs','beffe']){
+        try{await this.syncTable(sb,uid,table);}catch(e){errs.push([table,String(e&&e.message||e)]);}
       }
-      if(changed.length)await Store.putMany(changed);
-      /* 2. Invio le modifiche fatte su questo dispositivo */
-      const dirty=allRecs.filter(r=>r.dirty);
-      if(dirty.length){
-        const rows=dirty.map(r=>({user_id:uid,id:r.id,title:String(r.title||'').slice(0,200),deleted:!!r.deleted,
-          data:r.deleted?null:recPayload(r),updated_at:new Date(r.updatedAt||Date.now()).toISOString()}));
-        const {error:e2}=await sb.from('songs').upsert(rows,{onConflict:'user_id,id'});
-        if(e2)throw e2;
-        dirty.forEach(r=>{r.dirty=false;});
-        const gone=dirty.filter(r=>r.deleted);allRecs=allRecs.filter(r=>!gone.includes(r));
-        await Store.putMany(dirty);
-      }
-      await Store.setMeta('lastPull',{uid,at:max});await Store.setMeta('lastSync',Date.now());
+      if(errs.length<2)await Store.setMeta('lastSync',Date.now());
       if(!songsSheet.hidden)renderSongList();
       if(typeof mkRefresh==='function')mkRefresh();
-      uiCloud();
-    }catch(e){
-      const m=String(e&&e.message||e);
-      uiCloud(/fetch|network|Failed/i.test(m)?'Il cloud non risponde: riprovo più tardi. Gli spartiti restano salvati qui.'
-        :/row-level security|permission denied/i.test(m)?'Questo account non è abilitato alla sincronizzazione.'
-        :/relation|schema|does not exist/i.test(m)?'Nel progetto Supabase manca la tabella degli spartiti: esegui lo script supabase/schema.sql.'
-        :'Sincronizzazione non riuscita: '+m);
-    }finally{
+    }catch(e){errs.push(['',String(e&&e.message||e)]);}
+    finally{
       this.busy=false;
+      if(!errs.length)uiCloud();
+      else{
+        const [table,m]=errs[0];
+        uiCloud(/fetch|network|Failed/i.test(m)?'Il cloud non risponde: riprovo più tardi. Spartiti e beffe restano salvati qui.'
+          :/row-level security|permission denied/i.test(m)?'Questo account non è abilitato alla sincronizzazione.'
+          :/relation|schema|does not exist|Could not find/i.test(m)?(table==='beffe'
+            ?'Gli spartiti sono sincronizzati, ma nel progetto Supabase manca la tabella delle beffe: esegui lo script supabase/beffe.sql.'
+            :'Nel progetto Supabase manca la tabella degli spartiti: esegui lo script supabase/schema.sql.')
+          :'Sincronizzazione non riuscita: '+m);
+      }
       if(this.again){this.again=false;this.schedule(500);}
     }
   }
+
 };
 /* Contenuto di un record da salvare nel cloud: tutto tranne i campi di servizio */
-function recPayload(r){const o={};for(const k in r)if(!['id','title','deleted','dirty','updatedAt'].includes(k))o[k]=r[k];return o;}
+function recPayload(r){const o={};for(const k in r)if(!['id','title','deleted','dirty','updatedAt','fromSongs'].includes(k))o[k]=r[k];return o;}
 function cloudMsg(t){const el=$('#cloudMsg');el.textContent=t||'';el.hidden=!t;}
 async function uiCloud(status){
   if(!Cloud.enabled())return;
