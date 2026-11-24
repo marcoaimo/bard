@@ -23,7 +23,7 @@ Senza questi passaggi l’app salva gli spartiti solo sul dispositivo, con backu
 3. **Authentication → URL Configuration**: in **Site URL** e in **Redirect URLs** metti l’indirizzo del sito GitHub Pages.
 4. **Authentication → Email Templates → Magic Link**: aggiungi al testo dell’email il codice `{{ .Token }}`, per esempio `Il tuo codice: {{ .Token }}`. Così puoi accedere scrivendo il codice nell’app, cosa indispensabile su iPhone quando l’app è installata nella Home.
 5. **Project Settings → API**: copia **Project URL** e la chiave pubblica (**anon** o **publishable**) in `docs/config.js`.
-6. Dopo aver creato il tuo account dall’app, se vuoi che nessun altro possa registrarsi: **Authentication → Sign In / Providers**, disattiva **Allow new users to sign up**.
+6. Per riservare la sincronizzazione a te: esegui `supabase/allowlist.sql`, poi aggiungi la tua email con `insert into public.allowed_emails (email) values ('tua@email.it');`. Solo le email in elenco possono creare un account e leggere o scrivere spartiti. Per abilitare altre persone, aggiungi le loro email allo stesso elenco; per togliere l’accesso, cancella la riga. L’email non va nel repository, che è pubblico: si inserisce solo dal pannello di Supabase.
 
 La chiave pubblica è pensata per stare nel browser: ogni utente vede e modifica solo i propri spartiti grazie alle regole di accesso dello script SQL. Non mettere mai in `docs/config.js` la chiave `service_role` o `secret`.
 
@@ -38,7 +38,7 @@ Il piano gratuito di Supabase mette in pausa i progetti con poca attività per u
   - `sounds/`: campioni audio, caricati solo quando scegli lo strumento
   - `vendor/`: lettore di spartiti ABC (abcjs, licenza MIT)
   - `icons/`: icone per la schermata Home
-- `supabase/schema.sql` e `supabase/migrations/`: tabella e regole di accesso per la sincronizzazione
+- `supabase/schema.sql`, `supabase/allowlist.sql` e `supabase/migrations/`: tabella, regole di accesso ed elenco delle email abilitate
 
 Per modificare l’app: cambia i file in `src/`, esegui `python3 build.py`, poi commit e push.
 

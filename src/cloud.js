@@ -80,6 +80,7 @@ const Cloud={
     }catch(e){
       const m=String(e&&e.message||e);
       uiCloud(/fetch|network|Failed/i.test(m)?'Il cloud non risponde: riprovo più tardi. Gli spartiti restano salvati qui.'
+        :/row-level security|permission denied/i.test(m)?'Questo account non è abilitato alla sincronizzazione.'
         :/relation|schema|does not exist/i.test(m)?'Nel progetto Supabase manca la tabella degli spartiti: esegui lo script supabase/schema.sql.'
         :'Sincronizzazione non riuscita: '+m);
     }finally{
@@ -106,7 +107,7 @@ $('#cloudSend').addEventListener('click',async()=>{
   if(!/^\S+@\S+\.\S+$/.test(email)){cloudMsg('Scrivi un indirizzo email valido.');return;}
   $('#cloudSend').disabled=true;cloudMsg('Invio il codice…');
   try{await Cloud.sendCode(email);uiCloud();cloudMsg('Ti ho mandato un’email: scrivi qui il codice, oppure apri il link dallo stesso dispositivo.');$('#cloudOtp').focus();}
-  catch(e){cloudMsg('Non riesco a mandare il codice: '+(e.message||e));}
+  catch(e){const m=String(e&&e.message||e);cloudMsg(/database error|non abilitata|signups? not allowed|not allowed/i.test(m)?'Questa email non è abilitata alla sincronizzazione.':'Non riesco a mandare il codice: '+m);}
   finally{$('#cloudSend').disabled=false;}
 });
 $('#cloudVerify').addEventListener('click',async()=>{
