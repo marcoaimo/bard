@@ -42,6 +42,8 @@ Il piano gratuito di Supabase mette in pausa i progetti con poca attività per u
   - `icons/`: icone per la schermata Home
 - `supabase/schema.sql`, `supabase/allowlist.sql`, `supabase/mockeries.sql` e `supabase/migrations/`: tabelle di spartiti e beffe, regole di accesso ed elenco delle email abilitate
 
+Gli spartiti possono avere, oltre alla melodia, una traccia del tamburello (campo `perc`: colpi con tempo in battiti e tipo `low`, `hit` o `fast`), scritta nella scheda «Tamburello» dell’editor.
+
 Per modificare l’app: cambia i file in `src/`, esegui `python3 build.py`, poi commit e push.
 
 ## Crediti

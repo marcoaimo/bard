@@ -86,7 +86,7 @@ const storeReady=Store.init().then(recs=>{allRecs=recs;}).catch(()=>{allRecs=[];
 
 /* Backup: un file JSON con tutti gli spartiti, da esportare e reimportare */
 function exportBackup(){
-  const songs=liveSongs().map(r=>({id:r.id,title:r.title,by:r.by,bpm:r.bpm,meter:r.meter,ev:r.ev,updatedAt:r.updatedAt}));
+  const songs=liveSongs().map(r=>({id:r.id,title:r.title,by:r.by,bpm:r.bpm,meter:r.meter,ev:r.ev,perc:r.perc,updatedAt:r.updatedAt}));
   const beffe=liveBeffe().map(r=>Object.assign(recPayload(r),{id:r.id,title:r.title,updatedAt:r.updatedAt}));
   if(!songs.length&&!beffe.length){songsMsg('Non ci sono ancora spartiti o beffe tuoi da esportare.');return;}
   const json=JSON.stringify({app:'fiati-tascabili',version:2,exported:new Date().toISOString(),songs,beffe});
@@ -117,7 +117,7 @@ async function importBackup(file){
     if(!s||!s.id||!Array.isArray(s.ev)||!s.ev.length)continue;
     const cur=allRecs.find(r=>r.id===s.id);
     if(cur&&!cur.deleted&&(cur.updatedAt||0)>=(s.updatedAt||0)){skipped++;continue;}
-    take.push({id:String(s.id),title:String(s.title||'Senza titolo').slice(0,120),by:s.by||'dal backup',bpm:+s.bpm||100,meter:Array.isArray(s.meter)?s.meter:[4,4],ev:s.ev});
+    take.push({id:String(s.id),title:String(s.title||'Senza titolo').slice(0,120),by:s.by||'dal backup',bpm:+s.bpm||100,meter:Array.isArray(s.meter)?s.meter:[4,4],ev:s.ev,perc:Array.isArray(s.perc)?s.perc:undefined});
   }
   if(take.length&&!(await saveSongs(take)))return;
   renderSongList();

@@ -443,6 +443,14 @@ function tambStrike(d){
   if(d<inner){const k=d/inner;tambHit(1-.35*k,'low');tambHit(.35+.25*k,'hit');}
   else{tambHit(1-.4*d,'hit');const b=Math.max(0,(.7-d)/.15);if(b>0)tambHit(.35*b,'low');}
 }
+/* Traccia del tamburello scritta nell'editor: colpo basso, colpo e sonagli */
+const PERC_NAME={low:'Colpo basso',hit:'Colpo',fast:'Sonagli'};
+const percOf=raw=>raw&&Array.isArray(raw.perc)?raw.perc:[];
+function percHit(k,v){
+  if(!ready('tamb'))return;
+  if(k==='low'){tambHit(v,'low');tambHit(.3*v,'hit');}else if(k==='fast')tambHit(.8*v,'fast');else tambHit(.85*v,'hit');
+}
+const accompanying=()=>!!(SM.raw&&S.inst!=='tamb'&&S.accomp!==false&&percOf(SM.raw).length);
 function tambDist(ev){
   const r=tambSvg.getBoundingClientRect(),R=Math.min(r.width,r.height)*106/224;
   return Math.hypot(ev.clientX-(r.left+r.width/2),ev.clientY-(r.top+r.height/2))/R;
@@ -540,8 +548,11 @@ function layoutMap(){
   return map;
 }
 function mapSong(){
-  if(S.inst==='tamb'){const bar=SM.raw.meter?SM.raw.meter[0]*4/SM.raw.meter[1]:4;
-    SM.ev=SM.raw.ev.map(e=>({t:e.t,d:e.d,acc:Math.abs(e.t/bar-Math.round(e.t/bar))<.01,p:[{m:-1,i:-1,ob:false}]}));SM.folded=0;return;}
+  if(S.inst==='tamb'){const bar=SM.raw.meter?SM.raw.meter[0]*4/SM.raw.meter[1]:4,pc=percOf(SM.raw);
+    if(pc.length)SM.ev=pc.map((h,k)=>{const nx=pc.slice(k+1).find(x=>x.t>h.t+1e-6);return{t:h.t,d:nx?Math.min(1,nx.t-h.t):.5,acc:h.k==='low',k:h.k,p:[{m:-1,i:-1,ob:false,k:h.k}]};})
+      .filter((e,k,a)=>!k||Math.abs(a[k-1].t-e.t)>1e-6||a[k-1].k!==e.k);
+    else SM.ev=SM.raw.ev.map(e=>({t:e.t,d:e.d,acc:Math.abs(e.t/bar-Math.round(e.t/bar))<.01,p:[{m:-1,i:-1,ob:false}]}));
+    SM.folded=0;return;}
   const map=layoutMap(),keys=[...map.keys()];let folded=0;
   SM.ev=SM.raw.ev.map(e=>{const p=[];
     for(const m0 of e.m){let m=m0+SM.sh;
@@ -557,7 +568,7 @@ function refitSong(announce){
   else if(S.inst!=='tamb'){S.key=f.key;S.scale=f.scale;ctl.key.value=f.key;ctl.scale.value=f.scale;}
   save();render();
   if(!announce)return;
-  const msg=[S.inst==='tamb'?'Il tamburello suona il ritmo della melodia, con un accento sul primo tempo':S.inst==='pipes'?(S.pnotes==='all'?'Chanter con tutte le note':'Chanter nella scala di Sol'):'Flauto in '+NOTE_IT[S.key%12]+', scala '+SCALE_IT[S.scale]];
+  const msg=[S.inst==='tamb'?(percOf(SM.raw).length?'Il tamburello suona la sua traccia: colpo basso, colpo e sonagli':'Il tamburello suona il ritmo della melodia, con un accento sul primo tempo'):S.inst==='pipes'?(S.pnotes==='all'?'Chanter con tutte le note':'Chanter nella scala di Sol'):'Flauto in '+NOTE_IT[S.key%12]+', scala '+SCALE_IT[S.scale]];
   if(SM.sh%12){const n=Math.abs(SM.sh);msg.push('brano trasposto di '+n+(n===1?' semitono':' semitoni'));}
   if(SM.ev.some(e=>e.p.some(q=>q.ob)))msg.push('le note più acute si suonano con Soffio forte');
   if(SM.folded)msg.push(SM.folded===1?'1 nota fuori estensione spostata di ottava':SM.folded+' note fuori estensione spostate di ottava');
@@ -586,7 +597,9 @@ function startListen(){
   initAudio();
   if(!whenReady(startListen))return;
   if(SM.done||SM.beat>=songEnd()){SM.beat=Math.max(0,SM.ev[0].t-.5);SM.done=false;}
+  if(accompanying()&&!ready('tamb')){hint('Carico i suoni…');ensureBank('tamb').then(()=>{hideHint();startListen();});return;}
   SM.idx=SM.ev.findIndex(e=>e.t>=SM.beat-1e-6);if(SM.idx<0)SM.idx=SM.ev.length;
+  const pc=percOf(SM.raw);SM.pidx=pc.findIndex(h=>h.t>=SM.beat-1e-6);if(SM.pidx<0)SM.pidx=pc.length;
   SM.playing=true;SM.t0=ctx.currentTime-SM.beat*spb();wake();updateSongUI();
 }
 function stopListen(){
@@ -600,7 +613,7 @@ function stopAuto(a){
   if(a.inst==='pipes')stopVoice(a.h,ctx.currentTime,.045);else ENG[a.inst].stop(a.h);
 }
 function startEvent(e){
-  if(S.inst==='tamb'){if(e.acc)tambStrike(.1);else tambHit(.7,'hit');return;}
+  if(S.inst==='tamb'){if(e.k)percHit(e.k,1);else if(e.acc)tambStrike(.1);else tambHit(.7,'hit');return;}
   const t=ctx.currentTime,inst=S.inst;
   for(const q of e.p){
     let h;
@@ -618,8 +631,10 @@ function stepListen(){
   SM.beat=(ctx.currentTime-SM.t0)/spb();
   let changed=false;
   while(SM.idx<SM.ev.length&&SM.ev[SM.idx].t<=SM.beat){startEvent(SM.ev[SM.idx]);SM.idx++;changed=true;}
+  const pc=accompanying()?percOf(SM.raw):[];
+  while(SM.pidx<pc.length&&pc[SM.pidx].t<=SM.beat){percHit(pc[SM.pidx].k,.75);SM.pidx++;}
   for(const a of SM.auto.slice())if(SM.beat>=a.end){stopAuto(a);changed=true;}
-  if(SM.idx>=SM.ev.length&&!SM.auto.length){
+  if(SM.idx>=SM.ev.length&&!SM.auto.length&&SM.pidx>=pc.length){
     SM.playing=false;SM.done=true;
     if(S.inst==='pipes'&&P.bag&&![...touches.values()].some(x=>x.h))deflate(false);
     updateSongUI();changed=true;
@@ -659,6 +674,7 @@ function updateSongUI(){
   sbPlay.innerHTML=along?ICON.again:(SM.playing?ICON.pause:ICON.play);
   sbPlay.setAttribute('aria-label',along?'Ricomincia':(SM.playing?'Pausa':'Ascolta il brano'));
   document.querySelectorAll('#sbMode button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===SM.mode));
+  $('#sbPerc').hidden=!(percOf(SM.raw).length&&S.inst!=='tamb');$('#sbPerc').setAttribute('aria-pressed',S.accomp!==false);
   sbTempo.hidden=along;$('#sbRestart').hidden=along;sbTempo.textContent='Velocità '+Math.round(S.stempo*100)+'%';
   sbView.setAttribute('aria-pressed',S.sview==='staff');sbFollow.dataset.view=S.sview;
   markTargets();SM.cache='';
@@ -684,6 +700,11 @@ sbTempo.addEventListener('click',()=>{
   const b=SM.beat;S.stempo=steps[k<0?2:k];save();
   if(SM.playing)SM.t0=ctx.currentTime-b*spb();updateSongUI();
 });
+$('#sbPerc').addEventListener('click',()=>{
+  S.accomp=S.accomp===false;save();updateSongUI();
+  if(SM.playing){const pc=percOf(SM.raw);SM.pidx=pc.findIndex(h=>h.t>=SM.beat-1e-6);if(SM.pidx<0)SM.pidx=pc.length;if(accompanying())ensureBank('tamb');}
+  hintFlash(S.accomp===false?'Tamburello di accompagnamento spento.':'Il tamburello accompagna la melodia.');
+});
 sbView.addEventListener('click',()=>{S.sview=S.sview==='staff'?'notes':'staff';save();updateSongUI();});
 $('#sbClose').addEventListener('click',closeSong);
 
@@ -698,7 +719,7 @@ function tick(){
   drawNotes();
   SM.raf=requestAnimationFrame(tick);
 }
-const label=e=>e?e.p.map(q=>q.m<0?(e.acc?'Colpo forte':'Colpo'):NOTE_IT[pc(q.m)]+'<sup>'+oct(q.m)+'</sup>').join(' '):'';
+const label=e=>e?e.p.map(q=>q.m<0?(q.k?PERC_NAME[q.k]:e.acc?'Colpo forte':'Colpo'):NOTE_IT[pc(q.m)]+'<sup>'+oct(q.m)+'</sup>').join(' '):'';
 function curK(){return SM.mode==='along'?SM.pos:Math.max(0,SM.idx-1);}
 function drawNotes(){
   const n=SM.ev.length;let k,now,nx1,nx2,frac;
@@ -723,7 +744,7 @@ function drawStaff(nb){
     const e=SM.ev[k];if(e.t+e.d<lo)continue;if(e.t>hi)break;
     const x=ph+(e.t-nb)*ppb,cls=SM.done?'past':k<ck?'past':k===ck?'cur':'fut';
     for(const q of e.p){
-      const dm=q.m-(S.inst==='rec'?12:0),st=q.m<0?34:Math.floor(dm/12-1)*7+STEP[pc(dm)],y=yOf(st);
+      const dm=q.m-(S.inst==='rec'?12:0),st=q.m<0?(q.k==='low'?31:q.k==='fast'?37:34):Math.floor(dm/12-1)*7+STEP[pc(dm)],y=yOf(st);
       for(let L=28;L>=st;L-=2)s+='<line class="sl" x1="'+(x-8)+'" x2="'+(x+8)+'" y1="'+yOf(L)+'" y2="'+yOf(L)+'"/>';
       for(let L=40;L<=st;L+=2)s+='<line class="sl" x1="'+(x-8)+'" x2="'+(x+8)+'" y1="'+yOf(L)+'" y2="'+yOf(L)+'"/>';
       s+='<rect class="dur '+cls+'" x="'+(x+3)+'" y="'+(y-1)+'" width="'+Math.max(0,e.d*ppb-8)+'" height="2" rx="1"/>';

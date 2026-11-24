@@ -20,7 +20,7 @@
       <button class="sb-ico" id="sbView" aria-pressed="false" aria-label="Mostra il pentagramma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 7h18M3 11h18M3 15h18"/><ellipse cx="9" cy="15.5" rx="2.6" ry="2" fill="currentColor" stroke="none" transform="rotate(-20 9 15.5)"/><path d="M11.4 14.6V4.5"/></svg></button>
     </div>
     <div class="sb-follow" id="sbFollow" data-view="notes">
-      <div class="sb-meta"><span class="sb-title" id="sbTitle"></span><span class="sb-count" id="sbCount"></span><button class="sb-chip" id="sbTempo">Velocità 100%</button><button class="sb-x sb-edit" id="sbEdit" aria-label="Modifica lo spartito"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button><button class="sb-x" id="sbClose" aria-label="Chiudi il brano">×</button></div>
+      <div class="sb-meta"><span class="sb-title" id="sbTitle"></span><span class="sb-count" id="sbCount"></span><button class="sb-chip" id="sbTempo">Velocità 100%</button><button class="sb-x sb-edit sb-perc" id="sbPerc" aria-pressed="true" aria-label="Tamburello di accompagnamento" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="13" rx="8" ry="3"/><path d="M4 13v4c0 1.7 3.6 3 8 3s8-1.3 8-3v-4"/><path d="M8 3l3 7M17 3l-3 7"/></svg></button><button class="sb-x sb-edit" id="sbEdit" aria-label="Modifica lo spartito"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button><button class="sb-x" id="sbClose" aria-label="Chiudi il brano">×</button></div>
       <div class="sb-seq"><span class="now" id="sbNow"></span><span class="nx" id="sbNext"></span><span class="obh" id="sbOb" hidden>con Soffio forte</span></div>
       <svg class="sb-staff" id="sbStaff" aria-hidden="true"></svg>
       <div class="sb-prog"><i id="sbBar"></i></div>
@@ -34,6 +34,22 @@
       <button class="ed-save" id="edDone">Salva</button>
       <button class="sb-x" id="edClose" aria-label="Chiudi l’editor">×</button>
     </div>
+    <div class="seg ed-tabs" id="edTabs" role="tablist"><button role="tab" data-tab="mel">Melodia</button><button role="tab" data-tab="perc">Tamburello</button></div>
+    <div class="ed-perc" id="edPerc" hidden>
+      <div class="pc-box">
+        <div class="pc-labels" aria-hidden="true"><span></span><span>Basso</span><span>Colpo</span><span>Sonagli</span></div>
+        <div class="pc-wrap" id="pcWrap"><div class="pc-grid" id="pcGrid" role="grid" aria-label="Traccia del tamburello"></div><div class="pc-head" id="pcHead" hidden></div></div>
+      </div>
+      <div class="ed-tools">
+        <button id="pcStep" class="wide" aria-label="Suddivisione della griglia">Ottavi</button>
+        <button id="pcFill" class="wide" aria-label="Crea la traccia dal ritmo della melodia">Dal ritmo</button>
+        <button id="pcLess" aria-label="Togli l’ultima battuta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h12"/></svg></button>
+        <button id="pcMore" aria-label="Aggiungi una battuta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v12M6 12h12"/></svg></button>
+        <button id="pcUndo" aria-label="Annulla l’ultima modifica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+        <button id="pcPlay" class="accent" aria-label="Ascolta"></button>
+      </div>
+    </div>
+    <div class="ed-mel" id="edMel">
     <div class="ed-staffbox">
       <div class="ed-wrap" id="edWrap"><svg class="ed-staff" id="edStaff" height="92" aria-label="Pentagramma: tocca una nota per selezionarla"></svg></div>
       <div class="ed-status" id="edStatus" aria-live="polite"></div>
@@ -52,6 +68,7 @@
       <button id="edUndo" aria-label="Annulla l’ultima modifica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
       <button id="edPlay" class="accent" aria-label="Ascolta da qui"></button>
       <button id="edMoreBtn" aria-label="Altre azioni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></button>
+    </div>
     </div>
   </div>
 

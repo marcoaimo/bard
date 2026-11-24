@@ -1,5 +1,5 @@
 /* ---------- Editor: si scrive toccando i fori, si ritocca sul pentagramma ---------- */
-const ED={on:false,src:null,isUser:false,seq:[],cur:-1,mode:'insert',dur:1,dot:false,meter:[4,4],undo:[],changed:false,lastT:0,playing:false,timers:[],voices:[]};
+const ED={tab:'mel',perc:[],pStep:.5,pBars:1,on:false,src:null,isUser:false,seq:[],cur:-1,mode:'insert',dur:1,dot:false,meter:[4,4],undo:[],changed:false,lastT:0,playing:false,timers:[],voices:[]};
 const editorEl=$('#editor'),edWrap=$('#edWrap'),edSvg=$('#edStaff');
 const DUR_NAMES={4:'semibreve',2:'minima',1:'semiminima',.5:'croma',.25:'semicroma'};
 const DOTTED=[6,3,1.5,.75,.375];
@@ -37,15 +37,14 @@ function fromSeq(){
   return ev;
 }
 
-function edSnap(){ED.undo.push(JSON.stringify({seq:ED.seq,cur:ED.cur}));if(ED.undo.length>120)ED.undo.shift();ED.changed=true;}
+function edSnap(){ED.undo.push(JSON.stringify({seq:ED.seq,cur:ED.cur,perc:ED.perc,pBars:ED.pBars}));if(ED.undo.length>120)ED.undo.shift();ED.changed=true;}
 function curDur(){return ED.dur*(ED.dot?1.5:1);}
-const editable=()=>ED.on&&S.inst!=='tamb';
+const editable=()=>ED.on&&S.inst!=='tamb'&&ED.tab==='mel';
 
 function edOpen(src){
-  if(S.inst==='tamb'){hintFlash('L’editor funziona con i fiati: scegli un flauto o la cornamusa dal menu in alto.');return;}
   closeSongs();closeSong();
   let sh=0;
-  if(src&&src.ev&&src.ev.length){
+  if(src&&src.ev&&src.ev.length&&S.inst!=='tamb'){
     const f=fitSong(src);sh=f.sh;
     if(S.inst==='pipes'){S.pnotes=f.pnotes;ctl.pnotes.value=f.pnotes;}
     else{S.key=f.key;S.scale=f.scale;ctl.key.value=f.key;ctl.scale.value=f.scale;}
@@ -54,10 +53,14 @@ function edOpen(src){
   Object.assign(ED,{on:true,src:src||null,isUser:!!(src&&allRecs.includes(src)),seq:src?toSeq(src.ev||[],sh):[],
     meter:src&&src.meter?src.meter.slice():[4,4],undo:[],changed:false,mode:'insert',dot:false});
   ED.cur=ED.seq.length-1;
+  ED.perc=percOf(src).map(h=>({t:h.t,k:h.k}));ED.pStep=ED.perc.some(h=>Math.abs(h.t*2-Math.round(h.t*2))>1e-6)?.25:.5;
+  ED.pBars=Math.max(1,Math.ceil((Math.max(edMelEnd(),...ED.perc.map(h=>h.t+.01))-1e-6)/edBar()));
+  edTab(S.inst==='tamb'?'perc':'mel');
   $('#edTitle').value=src?src.title:'Nuovo brano';$('#edBpm').value=src?Math.round(src.bpm):100;
   editorEl.hidden=false;root.classList.add('editing');
   requestAnimationFrame(()=>{layout();edDraw(true);});edUI();
   if(sh%12)hintFlash('Ho trasposto lo spartito di '+Math.abs(sh)+(Math.abs(sh)===1?' semitono':' semitoni')+' per farlo stare sui fori. Se lo salvi resta in questa tonalità.');
+  else if(!src&&S.inst==='tamb')hintFlash('Scrivi qui la traccia del tamburello. Per la melodia passa a un fiato dal menu in alto.');
   else if(!src)hintFlash('Scegli la durata qui sopra, poi tocca i fori per scrivere le note. Più fori insieme fanno un accordo.');
 }
 function edEnd(){edStop();ED.on=false;editorEl.hidden=true;root.classList.remove('editing');requestAnimationFrame(layout);}
@@ -67,11 +70,12 @@ async function edClose(){
 }
 async function edSave(){
   const ev=fromSeq();
-  if(!ev.length){hintFlash('Scrivi almeno una nota prima di salvare.');return;}
+  if(!ev.length){hintFlash(ED.perc.length?'Serve almeno una nota di melodia: il tamburello la accompagna. Scegli un fiato e scrivila in «Melodia».':'Scrivi almeno una nota prima di salvare.');return;}
+  const perc=ED.perc.slice().sort((a,b)=>a.t-b.t||a.k.localeCompare(b.k)).map(h=>({t:Math.round(h.t*48)/48,k:h.k}));
   const title=$('#edTitle').value.trim()||'Senza titolo',bpm=Math.max(30,Math.min(300,Math.round(+$('#edBpm').value||100)));
   let rec;
-  if(ED.isUser){rec=ED.src;Object.assign(rec,{title,bpm,meter:ED.meter,ev});}
-  else rec={id:newId(),title,by:ED.src?'modificato da te':'scritto da te',bpm,meter:ED.meter,ev};
+  if(ED.isUser){rec=ED.src;Object.assign(rec,{title,bpm,meter:ED.meter,ev,perc:perc.length?perc:undefined});if(!perc.length)delete rec.perc;}
+  else{rec={id:newId(),title,by:ED.src?'modificato da te':'scritto da te',bpm,meter:ED.meter,ev};if(perc.length)rec.perc=perc;}
   if(!(await saveSong(rec)))return;
   edEnd();loadSong(rec);hintFlash('Spartito salvato.');
 }
@@ -116,7 +120,7 @@ function edDelete(){
 }
 function edUndo(){
   const s=ED.undo.pop();if(!s)return;
-  const o=JSON.parse(s);ED.seq=o.seq;ED.cur=o.cur;ED.mode='edit';edDraw(true);edUI();
+  const o=JSON.parse(s);ED.seq=o.seq;ED.cur=o.cur;if(o.perc){ED.perc=o.perc;ED.pBars=o.pBars||ED.pBars;}ED.mode='edit';edDraw(true);edUI();pcDraw();
 }
 function edTranspose(n){
   if(!ED.seq.some(it=>it.m.length))return;
@@ -165,6 +169,8 @@ function edStop(){
   ED.timers.forEach(clearTimeout);ED.timers=[];
   if(ctx)ED.voices.forEach(edVoiceOff);ED.voices=[];
   if(ED.playing){ED.playing=false;edUI();}
+  if(typeof pcRaf!=='undefined'){cancelAnimationFrame(pcRaf);const h=$('#pcHead');if(h)h.hidden=true;}
+  if(ED.on&&ED.tab==='perc')pcDraw();
 }
 
 /* Pentagramma dell’editor: spaziatura proporzionale, stanghette di battuta, nota selezionata e cursore */
@@ -279,11 +285,90 @@ edMore.addEventListener('click',async ev=>{
     if(await askConfirm('Eliminare «'+ED.src.title+'»? Non si può annullare.','Elimina')){const id=ED.src.id;ED.changed=false;edEnd();await deleteSong(id);hintFlash('Spartito eliminato.');}
   }
 });
-$('#edMeter').addEventListener('change',ev=>{edSnap();ED.meter=ev.target.value.split('/').map(Number);edDraw();});
+$('#edMeter').addEventListener('change',ev=>{edSnap();ED.meter=ev.target.value.split('/').map(Number);edDraw();pcDraw();});
+
+/* ---------- Traccia del tamburello: griglia a tre righe ---------- */
+const PC_ROWS=['low','hit','fast'];
+const edBar=()=>ED.meter[0]*4/ED.meter[1];
+function edMelEnd(){let t=0;ED.seq.forEach(it=>{t+=it.d;});return t;}
+function edTab(tab){
+  ED.tab=tab;
+  document.querySelectorAll('#edTabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===tab));
+  $('#edMel').hidden=tab!=='mel';$('#edPerc').hidden=tab!=='perc';
+  edStop();
+  if(tab==='perc')requestAnimationFrame(()=>{layout();pcDraw();});else requestAnimationFrame(()=>{layout();edDraw(true);});
+}
+const pcHas=(t0,k)=>ED.perc.some(h=>h.k===k&&h.t>=t0-1e-6&&h.t<t0+ED.pStep-1e-6);
+function pcDraw(){
+  if(!ED.on)return;
+  const bar=edBar(),steps=Math.round(ED.pBars*bar/ED.pStep),per=Math.round(1/ED.pStep);
+  const g=$('#pcGrid');g.style.gridTemplateColumns='repeat('+steps+',var(--pcw))';
+  let h='';
+  for(let s=0;s<steps;s++){const t=s*ED.pStep,isBar=Math.abs(t/bar-Math.round(t/bar))<1e-6;
+    h+='<span class="pc-num'+(isBar?' bar':'')+'">'+(isBar?(Math.round(t/bar)+1):(s%per===0?'·':''))+'</span>';}
+  PC_ROWS.forEach((k,r)=>{
+    for(let s=0;s<steps;s++){const t=s*ED.pStep,isBar=Math.abs(t/bar-Math.round(t/bar))<1e-6,isBeat=s%per===0,on=pcHas(t,k);
+      h+='<button class="pc-cell'+(isBar?' bar':isBeat?' beat':'')+'" data-s="'+s+'" data-k="'+k+'" aria-pressed="'+on+'" aria-label="Battuta '+(Math.floor(t/bar)+1)+', tempo '+(Math.floor(t%bar)+1)+(isBeat?'':' e mezzo')+': '+PERC_NAME[k]+'"></button>';}
+  });
+  g.innerHTML=h;
+  $('#pcStep').textContent=ED.pStep===.5?'Ottavi':'Sedicesimi';
+  $('#pcLess').disabled=ED.pBars<=1;$('#pcUndo').disabled=!ED.undo.length;
+  $('#pcPlay').innerHTML=ED.playing?ICON.pause:ICON.play;$('#pcPlay').setAttribute('aria-label',ED.playing?'Ferma':'Ascolta');
+}
+$('#pcGrid').addEventListener('click',ev=>{
+  const b=ev.target.closest('.pc-cell');if(!b)return;
+  const t=+b.dataset.s*ED.pStep,k=b.dataset.k;
+  edSnap();
+  if(pcHas(t,k))ED.perc=ED.perc.filter(h=>!(h.k===k&&h.t>=t-1e-6&&h.t<t+ED.pStep-1e-6));
+  else{ED.perc.push({t,k});initAudio();ensureBank('tamb').then(()=>percHit(k,1));}
+  pcDraw();
+});
+document.querySelectorAll('#edTabs button').forEach(b=>b.addEventListener('click',()=>edTab(b.dataset.tab)));
+$('#pcStep').addEventListener('click',()=>{ED.pStep=ED.pStep===.5?.25:.5;pcDraw();});
+$('#pcFill').addEventListener('click',()=>{
+  const ev=fromSeq();if(!ev.length){edStatusFlash('');hintFlash('Prima scrivi la melodia: la traccia segue il suo ritmo.');return;}
+  edSnap();const bar=edBar();
+  ED.perc=ev.map(e=>({t:e.t,k:Math.abs(e.t/bar-Math.round(e.t/bar))<1e-6?'low':Math.abs(e.t-Math.round(e.t))<1e-6?'hit':'fast'}));
+  ED.pStep=ED.perc.some(h=>Math.abs(h.t*2-Math.round(h.t*2))>1e-6)?.25:.5;
+  ED.pBars=Math.max(ED.pBars,Math.ceil((edMelEnd()-1e-6)/bar));pcDraw();
+  hintFlash('Traccia creata dal ritmo della melodia: colpo basso in battere, colpo sui tempi, sonagli in mezzo.');
+});
+$('#pcMore').addEventListener('click',()=>{edSnap();ED.pBars++;pcDraw();const w=$('#pcWrap');w.scrollLeft=w.scrollWidth;});
+$('#pcLess').addEventListener('click',()=>{
+  if(ED.pBars<=1)return;edSnap();ED.pBars--;const end=ED.pBars*edBar();ED.perc=ED.perc.filter(h=>h.t<end-1e-6);pcDraw();
+});
+$('#pcUndo').addEventListener('click',edUndo);
+/* Ascolto della traccia, con la melodia se lo strumento è un fiato */
+let pcRaf=0;
+function pcPlay(){
+  if(ED.playing){edStop();return;}
+  if(!ED.perc.length&&!ED.seq.some(it=>it.m.length)){hintFlash('La griglia è vuota: tocca le caselle per aggiungere i colpi.');return;}
+  initAudio();
+  const banks=[ensureBank('tamb')];if(S.inst!=='tamb')banks.push(ensureBank(S.inst));
+  Promise.all(banks).then(()=>{
+    if(ED.playing)return;
+    const spb=60/Math.max(30,+$('#edBpm').value||100),end=Math.max(ED.pBars*edBar(),edMelEnd());
+    ED.playing=true;pcDraw();
+    ED.perc.forEach(h=>ED.timers.push(setTimeout(()=>percHit(h.k,1),h.t*spb*1000)));
+    if(S.inst!=='tamb'){let t=0;ED.seq.forEach(it=>{const at=t,len=it.d;
+      if(it.m.length)ED.timers.push(setTimeout(()=>{const vs=it.m.map(edVoiceOn);ED.voices.push(...vs);
+        ED.timers.push(setTimeout(()=>{vs.forEach(edVoiceOff);ED.voices=ED.voices.filter(v=>!vs.includes(v));},Math.max(60,len*spb*920)));},at*spb*1000));
+      t+=it.d;});}
+    const head=$('#pcHead'),t0=performance.now(),w=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pcw'))||26;
+    head.hidden=false;
+    const step=()=>{if(!ED.playing){head.hidden=true;return;}
+      const beat=(performance.now()-t0)/1000/spb,x=beat/ED.pStep*w;head.style.transform='translateX('+x+'px)';
+      const wrap=$('#pcWrap');if(x>wrap.scrollLeft+wrap.clientWidth-40||x<wrap.scrollLeft)wrap.scrollLeft=Math.max(0,x-40);
+      pcRaf=requestAnimationFrame(step);};
+    pcRaf=requestAnimationFrame(step);
+    ED.timers.push(setTimeout(()=>{ED.playing=false;cancelAnimationFrame(pcRaf);head.hidden=true;pcDraw();edUI();refresh();},end*spb*1000+120));
+  });
+}
+$('#pcPlay').addEventListener('click',pcPlay);
 
 /* Scorciatoie da tastiera nell’editor */
 document.addEventListener('keydown',ev=>{
-  if(!ED.on||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName)||!sheet.hidden||!edMore.hidden||!$('#mock').hidden)return;
+  if(!ED.on||ED.tab!=='mel'||/^(INPUT|SELECT|TEXTAREA)$/.test(ev.target.tagName)||!sheet.hidden||!edMore.hidden||!$('#mock').hidden)return;
   const k=ev.key;
   if(k==='ArrowLeft'){edMove(-1);ev.preventDefault();}
   else if(k==='ArrowRight'){edMove(1);ev.preventDefault();}

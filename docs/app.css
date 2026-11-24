@@ -336,3 +336,28 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .mk-card.flash{animation:mkflash .7s ease-out}
 @keyframes mkflash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
 @media (prefers-reduced-motion:reduce){.mk-card.flash{animation:none}}
+
+/* Traccia del tamburello nell'editor */
+:root{--pcw:26px}
+.ed-tabs button{flex:1}
+.ed-tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ed-mel,.ed-perc{display:flex;flex-direction:column;gap:6px}
+.pc-box{display:flex;background:var(--surface);border-radius:14px;overflow:hidden}
+.pc-labels{flex:none;display:grid;grid-template-rows:18px repeat(3,34px);gap:3px;padding:6px 0 6px 8px;font-size:11px;font-weight:700;color:var(--muted)}
+.pc-labels span{display:flex;align-items:center;padding-right:6px}
+.pc-wrap{position:relative;flex:1;min-width:0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:6px 8px 6px 0}
+.pc-wrap::-webkit-scrollbar{display:none}
+.pc-grid{display:grid;grid-template-rows:18px repeat(3,34px);grid-auto-flow:row;gap:3px 0;width:max-content}
+.pc-num{font-size:10px;font-weight:700;color:var(--muted);display:flex;align-items:center;padding-left:3px}
+.pc-num.bar{color:var(--ink)}
+.pc-cell{width:var(--pcw);height:34px;border:0;padding:0;margin:0;background:transparent;position:relative;cursor:pointer}
+.pc-cell::before{content:"";position:absolute;inset:3px 2px;border-radius:7px;background:var(--btn)}
+.pc-cell.beat{box-shadow:inset 1px 0 0 var(--line)}
+.pc-cell.bar{box-shadow:inset 2px 0 0 var(--muted)}
+.pc-cell[aria-pressed="true"]::before{background:var(--accent)}
+.pc-cell[data-k="low"][aria-pressed="true"]::before{inset:2px 1px}
+.pc-cell[data-k="fast"][aria-pressed="true"]::before{inset:9px 6px;border-radius:50%}
+.pc-head{position:absolute;top:6px;bottom:6px;left:0;width:2px;background:var(--accent);opacity:.8;pointer-events:none}
+.sb-perc[aria-pressed="false"]{opacity:.4}
+.sb-perc svg{width:18px;height:18px}
+@media (max-width:360px){:root{--pcw:22px}}
